@@ -1,0 +1,25 @@
+priority queue is used to implement min-heap or max-heap
+priority_queue<int, vector<int>> pq;
+pq.push(x);
+pq.pop();
+pq.size();
+pq.top();
+pq.empty();
+
+
+kth-largest-element-in-a-stream ------------
+
+Identification of type of heap to be used
+to find - kth largest element use min heap
+to find - kth smallest element use max heap
+Two variants - one in leetcode and gfg
+
+k-maximum-sum-combinations-two-arrays ------------
+
+make sure no repetition takes place while implementing it
+use a set for it to store pair's indices and take it only when unique
+
+find-median-from-data-stream
+
+balance minHeap and maxHeap
+don't forget about case when maxHeap is empty
