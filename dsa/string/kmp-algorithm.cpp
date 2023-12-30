@@ -23,6 +23,12 @@ public:
 
 
     // kmp algorithm 
+    // Name lps indicates the longest proper prefix which is also a suffix.
+    // A proper prefix is a prefix with a whole string not allowed.
+    // For example, prefixes of “ABC” are “”, “A”, “AB” and “ABC”.
+    // Proper prefixes are “”, “A” and “AB”.
+    // Suffixes of the string are “”, “C”, “BC”, and “ABC”.
+    
     vector<int> computeTemporaryArray(const char* pattern) {
         int len = strlen(pattern);
         vector<int> lps(len, 0);
