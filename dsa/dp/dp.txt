@@ -1,0 +1,26 @@
+How to Identify a DP problem?
+
+When we see a problem, it is very important to identify it as a dynamic programming problem.
+Generally (but not limited to) if the problem statement asks for the following:
+
+- Count the total number of ways
+- Given multiple ways of doing a task, which way will give the minimum
+  or the maximum output.
+
+Steps To Solve The Problem After Identification
+
+Once the problem has been identified, the following three steps
+comes handy in solving the problem:
+
+- Try to represent the problem in terms of indexes.
+- Try all possible choices/ways at every index according to the problem statement.
+- If the question states :
+-- Count all the ways – return sum of all choices/ways.
+-- Find maximum/minimum - return the choice/way with maximum/minimum output.
+
+Tabulation approach
+
+- Declare a dp array/table
+- First initialize the base condition values
+- Set an iterative loop which traverses the array
+  and for every index calculates.
