@@ -12,15 +12,28 @@ Steps To Solve The Problem After Identification
 Once the problem has been identified, the following three steps
 comes handy in solving the problem:
 
-- Try to represent the problem in terms of indexes.
+- Express the problem in terms of indexes.
+-- Base case
 - Try all possible choices/ways at every index according to the problem statement.
 - If the question states :
 -- Count all the ways – return sum of all choices/ways.
 -- Find maximum/minimum - return the choice/way with maximum/minimum output.
+
+Steps to memoize a recursive solution:
+
+- Create a dp array/table
+- Whenever we want to find the answer of a particular row 
+  and column (say f(i,j)), we first check whether the answer
+  is already calculated using the dp array(i.e dp[i][j]!= -1 )
+  If yes, simply return the value from the dp array.
+- If not, then we are finding the answer for the given values
+  for the first time, we will use the recursive relation
+  as usual but before returning from the function,
+  we will set dp[i][j] to the solution we get.
 
 Tabulation approach
 
 - Declare a dp array/table
 - First initialize the base condition values
 - Set an iterative loop which traverses the array
-  and for every index calculates.
+  and for every index calculates the optimised ans or count.
