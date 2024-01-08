@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 struct node {
@@ -17,7 +16,7 @@ vector < int > inorderTraversal(node * root) {
   while (cur != NULL) {
     if (cur -> left == NULL) {
       inorder.push_back(cur -> data);
-      cur = cur -> right
+      cur = cur -> right;
       
     } else {
       node * prev = cur -> left;
@@ -75,35 +74,35 @@ vector < int > preorderTraversal(node * root) {
 
 class rightViewOfBinaryTree {
 public:
-    void recursion(TreeNode *root, int level, vector<int> &res)
+    void recursion(node *root, int level, vector<int> &res)
     {
         if(root==NULL) return ;
-        if(res.size()==level) res.push_back(root->val);
+        if(res.size()==level) res.push_back(root->data);
         recursion(root->right, level+1, res);
         recursion(root->left, level+1, res);
         
         // for left view simply call left first then right
     }
     
-    vector<int> rightSideView(TreeNode *root) {
+    vector<int> rightSideView(node *root) {
         vector<int> res;
         recursion(root, 0, res);
         return res;
     }
 };
 
-class bottomView {
+class bottomViewClass {
   public:
-    vector <int> bottomView(Node *root) {
+    vector <int> bottomView(node *root) {
         vector<int> ans; 
         if(root == NULL) return ans; 
         map<int,int> mpp; 
-        queue<pair<Node*, int>> q; 
+        queue<pair<node*, int>> q; 
         q.push({root, 0}); 
         while(!q.empty()) {
             auto it = q.front(); 
             q.pop(); 
-            Node* node = it.first; 
+            node* node = it.first; 
             int line = it.second; 
             mpp[line] = node->data; 
             
@@ -123,21 +122,21 @@ class bottomView {
     }
 };
 
-class topView{
+class topViewClass{
   public:
     //Function to return a list of nodes visible from the top view 
     //from left to right in Binary Tree.
-    vector<int> topView(Node *root)
+    vector<int> topView(node *root)
     {
         vector<int> ans; 
         if(root == NULL) return ans; 
         map<int,int> mpp; 
-        queue<pair<Node*, int>> q; 
+        queue<pair<node*, int>> q; 
         q.push({root, 0}); 
         while(!q.empty()) {
             auto it = q.front(); 
             q.pop(); 
-            Node* node = it.first; 
+            node* node = it.first; 
             int line = it.second; 
             if(mpp.find(line) == mpp.end()) mpp[line] = node->data; 
             
@@ -199,4 +198,8 @@ void allTraversal(node * root, vector < int > & pre, vector < int > & in , vecto
       post.push_back(it.first -> data);
     }
   }
+}
+
+int main(){
+  return 0;
 }
