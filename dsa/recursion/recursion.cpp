@@ -44,7 +44,7 @@ public:
     
     void subs(vector<int> &nums, int curr, vector<int> &res){
         result.push_back(res);
-        for (auto i : res)cout<<i<<" ";
+        // for (auto i : res)cout<<i<<" ";
         cout<<endl;
         for(int i = curr; i < nums.size(); i++){
             if(i!=curr && nums[i]==nums[i-1]){
@@ -53,7 +53,7 @@ public:
             res.push_back(nums[i]);
             subs(nums, i+1, res);
             res.pop_back();
-            cout<<i<<" ";
+            // cout<<i<<" ";
         }
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
@@ -92,7 +92,6 @@ public:
         return result;
     } 
 };
-
 
 
 
