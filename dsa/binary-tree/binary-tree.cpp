@@ -200,6 +200,113 @@ void allTraversal(node * root, vector < int > & pre, vector < int > & in , vecto
   }
 }
 
+// vertical order traversal of binary tree - lc-hard
+
+/*
+Notes:
+1. for storing the nodes with vertical and level
+2. multiset is used to sort if their is more than one value
+  in same vertical and level
+  using set might remove same elements as the question
+3. has repetitive elements condition too.
+4. queue is used to do level order traversal
+*/
+
+vector<vector<int>> findVertical(node * root) {
+  map<int,map<int,multiset<int>>> nodes;
+  // vertical, <level, node_values>
+  queue<pair<node*,pair<int,int>>> todo;
+  // node, < vertical, level >
+  todo.push({root,{0,0}}); // initial vertical and level
+  while (!todo.empty()) {
+    auto p = todo.front();
+    todo.pop();
+    node* temp = p.first;
+
+    //x -> vertical , y->level
+    int x = p.second.first, y = p.second.second;
+    nodes[x][y].insert(temp -> data); //inserting to multiset
+
+    if (temp -> left) {
+      todo.push({temp -> left,{x - 1,y + 1}});
+    }
+    if (temp -> right) {
+      todo.push({temp -> right,{x + 1,y + 1}});
+    }
+  }
+  vector < vector < int >> ans;
+  for (auto p: nodes) {
+    // p: vertical, <level, node_values>
+    vector < int > col;
+    for (auto q: p.second) {
+      // q: <level, node_values>
+      col.insert(col.end(), q.second.begin(), q.second.end());
+    }
+    ans.push_back(col);
+  }
+  return ans;
+}
+
+// root to node path in binary tree
+
+bool getPath(node * root, vector < int > & arr, int x) {
+  // if root is NULL
+  // there is no path
+  if (!root)
+    return false;
+
+  // push the node's value in 'arr'
+  arr.push_back(root -> data);
+
+  // if it is the required node
+  // return true
+  if (root -> data == x)
+    return true;
+
+  // else check whether the required node lies
+  // in the left subtree or right subtree of
+  // the current node
+  if (getPath(root -> left, arr, x) ||
+    getPath(root -> right, arr, x))
+    return true;
+
+  // required node does not lie either in the
+  // left or right subtree of the current node
+  // Thus, remove current node's value from
+  // 'arr'and then return false   
+  arr.pop_back();
+  return false;
+}
+
+
+int widthOfBinaryTree(node * root) {
+  if (!root)
+    return 0;
+  int ans = 0;
+  queue < pair < node * , int >> q;
+  q.push({root,0});
+  while (!q.empty()) {
+    int size = q.size();
+    int curMin = q.front().second;
+    int leftMost, rightMost;
+    for (int i = 0; i < size; i++) {
+      int cur_id = q.front().second - curMin; // subtracted to prevent integer overflow
+      node * temp = q.front().first;
+      q.pop();
+      if (i == 0) leftMost = cur_id;
+      if (i == size - 1) rightMost = cur_id;
+      if (temp -> left)
+        q.push({temp -> left,cur_id * 2 + 1});
+      if (temp -> right)
+        q.push({temp -> right,cur_id * 2 + 2});
+    }
+    ans = max(ans, rightMost - leftMost + 1);
+  }
+  return ans;
+}
+
+
+
 int main(){
   return 0;
 }
