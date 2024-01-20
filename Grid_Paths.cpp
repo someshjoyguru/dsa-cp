@@ -1,178 +1,66 @@
-/*
-    written by Pankaj Kumar.
-    country:-INDIA
-    Institute: National Institute of Technology, Uttarakhand
-*/
 #include <bits/stdc++.h>
 using namespace std;
-
-
-/* ascii value
-A=65,Z=90,a=97,z=122
-*/
-
-// Techniques :
-// divide into cases, brute force, pattern finding
-// sort, greedy, binary search, two pointer
-// transform into graph
-const int n = 7;
-const int total_steps=48;
-bool visited[n][n];
-int reserved[49];
-string path;
-
-
-void move(int row, int col, int &ans, int &steps)
-{
-    if (row == n - 1 && col == 0)
-    {
-        if(steps==total_steps){
-            ans++;
-        }
-        return ;
-    }
-
-    // if you hit a wall or a path (can only go left or right); return
-    if ((row + 1 == n || (visited[row - 1][col] && visited[row + 1][col])) && col - 1 >= 0 && col + 1 < n && !visited[row][col - 1] && !visited[row][col + 1]){
-        return ;
-    }
-    if((col + 1 == n || (visited[row][col - 1] && visited[row][col + 1])) && row - 1 >= 0 && row + 1 < n && !visited[row - 1][col] && !visited[row + 1][col]){
-        return ;
-    }
-    if((row == 0 || (visited[row + 1][col] && visited[row - 1][col])) && col - 1 >= 0 && col + 1 < n && !visited[row][col - 1] && !visited[row][col + 1]){
-        return ;
-    }
-    if((col == 0 || (visited[row][col + 1] && visited[row][col - 1])) && row - 1 >= 0 && row + 1 < n && !visited[row - 1][col] && !visited[row + 1][col]){
-        return;
-    }
-
-    visited[row][col] = true;
-
-    if (path[steps]!='?')
-    {
-        if(path[steps]=='U'){
-            if (row - 1 >= 0)
-            {
-                if (!visited[row - 1][col])
-                {
-                    steps++;
-                    move(row - 1, col, ans, steps);
-                    steps--;
-                }
-            }
-        }
-        else if(path[steps]=='R'){
-            if (col + 1 < n)
-            {
-                if (!visited[row][col + 1])
-                {
-                    steps++;
-                    move(row, col + 1, ans, steps);
-                    steps--;
-                }
-            }
-        }
-
-        else if(path[steps]=='D'){
-            if (row + 1 < n)
-            {
-                if (!visited[row + 1][col])
-                {
-                    steps++;
-                    move(row + 1, col, ans, steps);
-                    steps--;
-                }
-            }
-        }
-
-        else if(path[steps]=='L'){
-            if (col - 1 >= 0)
-            {
-                if (!visited[row][col - 1])
-                {
-                    steps++;
-                    move(row, col - 1, ans, steps);
-                    steps--;
-                }
+#define  fastio()        ios::sync_with_stdio(false); cin.tie(NULL);cout.tie(NULL);
+#define ll long long
+const ll inf = 1e9+20;
+const ll mod = 1e9+7;
+void solve(){
+    // input
+    ll n; cin>>n;
+    vector<vector<ll>> dp(n,vector<ll>(n,0));
+    for (ll i=0; i<n; i++){
+        string s; cin>>s;
+        for (ll j=0; j<n; j++){
+            if (s[j]=='*'){
+                // v[i][j]=inf;
+                dp[i][j]=inf;
             }
         }
     }
-    else{
-        // move down
-        if (row + 1 < n)
-        {
-            if (!visited[row + 1][col])
-            {
-                steps++;
-                move(row + 1, col, ans, steps);
-                steps--;
-            }
-        }
 
-        // move right
-        if (col + 1 < n)
-        {
-            if (!visited[row][col + 1])
-            {
-                steps++;
-                move(row, col + 1, ans, steps);
-                steps--;
-            }
-        }
-
-        // move up
-        if (row - 1 >= 0)
-        {
-            if (!visited[row - 1][col])
-            {
-                steps++;
-                move(row - 1, col, ans, steps);
-                steps--;
-            }
-        }
-
-        // move left
-        if (col - 1 >= 0)
-        {
-            if (!visited[row][col - 1])
-            {
-                steps++;
-                move(row, col - 1, ans, steps);
-                steps--;
-            }
-        }
-        // visited[r][c] = false;
+    // dp table
+    //base case
+    for (ll i=0; i<n; i++){
+        if (dp[i][0]!=inf) dp[i][0]=1;
+        else break;
     }
-    visited[row][col] = false;
+
+    for (ll i=0; i<n; i++){
+        if (dp[0][i]!=inf) dp[0][i]=1;
+        else break;
+    }
+
+    for (ll i=1; i<n; i++){
+        for (ll j=1; j<n; j++){
+            if (dp[i][j]==inf) continue;
+            if (dp[i-1][j]!=inf)dp[i][j]+=dp[i-1][j];
+            if (dp[i][j-1]!=inf)dp[i][j]+=dp[i][j-1];
+            dp[i][j]%=mod;
+        }
+    }
+
+    for (ll i=0; i<n; i++){
+        for (ll j=0; j<n; j++){
+            cout<<dp[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    // if (dp[n-1][n-1]<inf) cout<<dp[n-1][n-1];
+    // else cout<<0;
+    cout<<dp[n-1][n-1];
 }
 
-
-int main()
-{
-    cin >> path;
-    for (int i = 0; i < path.length(); i++)
-    {
-        if (path[i] == '?')
-            reserved[i] = -1;
-        else if (path[i] == 'U')
-            reserved[i] = 0;
-        else if (path[i] == 'R')
-            reserved[i] = 1;
-        else if (path[i] == 'D')
-            reserved[i] = 2;
-        else if (path[i] == 'L')
-            reserved[i] = 3;
+int main(){
+    fastio()
+    ll t=1;
+    // cin >> t;
+    while(t--){
+        solve();
     }
-    int ans = 0, steps = 0;
-    move(0, 0, ans, steps);
-    cout << ans<<endl;
     return 0;
 }
-/* -----------------END OF PROGRAM --------------------*/
-/*
-* stuff you should look before submission
-* constraint and time limit
-* int overflow
-* special test case (n=0||n=1||n=2)
-* don't get stuck on one approach if you get wrong answer
-*/
+
+// don't forget the edge cases 
+// while filling base case 
+// mod
+// when no. of paths is 0
