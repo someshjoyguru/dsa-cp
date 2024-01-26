@@ -4,24 +4,18 @@ using namespace std;
 #define ll long long
 
 void solve(){
-    ll n;cin>>n;
+    ll n; cin>>n;
     vector<ll> v(n);
     for (ll i=0; i<n; i++)cin>>v[i];
-    map<ll,ll> mp;
-    mp[0]++;
-    ll temp=0;
+    ll maxi=INT_MIN;
     for (ll i=0; i<n; i++){
-        if (i%2==1)temp+=v[i];
-        else temp-=v[i];
-        if (mp.find(temp)==mp.end()){
-            mp[temp]++;
-        }else {
-            cout<<"YES"<<endl;
+        if (v[i]<0){
+            cout<<v[i]<<endl;
             return;
         }
+        maxi=max(maxi,v[i]);
     }
-    cout<<"NO"<<endl;
-    return;
+    cout<<maxi<<endl;
 }
 
 int main(){
