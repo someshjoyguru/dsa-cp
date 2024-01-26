@@ -1,61 +1,37 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define  fastio()        ios::sync_with_stdio(false); cin.tie(NULL);cout.tie(NULL);
 #define ll long long
 
+
 void solve(){
-    ll n;
+    int n;
     cin >> n;
-    vector<ll> a(n), b(n), c(n);
-    vector<vector<ll>> mega(3*n, vector<ll>(3, 0));
-    int k=0;
-    for(ll i=0; i<n; i++){
-        mega[i][0] = k;
-        mega[i][1] = i;
-        cin >> mega[i][2];
-    }
-    k++;
-    for(ll i=n; i<2*n; i++){
-        mega[i][0] = k;
-        mega[i][1] = i-n;
-        cin >> mega[i][2];
-    }
-    k++;
-    for(ll i=2*n; i<3*n; i++){
-        mega[i][0] = k;
-        mega[i][1] = i-2*n;
-        cin >> mega[i][2];
-    }
-    sort(mega.begin(), mega.end(), [](vector<ll> &a, vector<ll> &b){
-        return a[2] > b[2];
-    });
+    
+    vector<vector<ll>> act(3, vector<ll>(n + 1));
+    for (int i = 0; i < 3; ++i)
+        for (int j = 1; j < n + 1; ++j) 
+            cin >> act[i][j];
 
-    // for (ll i = 0; i < 3*n; i++) {
-    //     cout << mega[i][0] << " " << mega[i][1] << " " << mega[i][2] << endl;
-    // }
+    vector<vector<vector<vector<ll>>>> dp(n + 1, vector<vector<vector<ll>>>(2, vector<vector<ll>>(2, vector<ll>(2, 0))));
 
-    vector<ll> v(3, -1);
-    map<ll, ll> mp;
-    ll sum=0;
-    // cout << endl;
-    for (ll i = 0; i < 3*n; i++) {
-        if (mp.find(mega[i][1]) != mp.end()) {
-            continue;
-        }
-        if (v[mega[i][0]] == -1 ) {
-            v[mega[i][0]] = mega[i][1];
-            mp[mega[i][1]]++;
-            // cout<<mega[i][0]<<" "<<mega[i][1]<<" "<<mega[i][2]<<endl;
-            sum+=mega[i][2];
-        }
-        if (v[0] != -1 && v[1] != -1 && v[2] != -1) {
-            break;
-        }
-    }
-    cout << sum << endl;
-
+    for (int day = 0; day < n; ++day)
+        for (int i : {0, 1})
+            for (int j : {0, 1})
+                for (int k : {0, 1}){
+                    if (i == 0) dp[day + 1][1][j][k] = max(dp[day + 1][1][j][k], dp[day][i][j][k] + act[0][day + 1]);
+                    if (j == 0) dp[day + 1][i][1][k] = max(dp[day + 1][i][1][k], dp[day][i][j][k] + act[1][day + 1]);
+                    if (k == 0) dp[day + 1][i][j][1] = max(dp[day + 1][i][j][1], dp[day][i][j][k] + act[2][day + 1]);
+                    dp[day + 1][i][j][k] = max(dp[day + 1][i][j][k], dp[day][i][j][k]);
+                }
+            
+        
+    cout << dp[n][1][1][1] << endl;
 }
 
+
 int main(){
+    fastio()
     ll t=1;
     cin >> t;
     while(t--){
