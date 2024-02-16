@@ -4,22 +4,24 @@ using namespace std;
 #define ll long long
 
 void solve(){
-    ll n;
-    cin>>n;
-    vector<ll> v(n);
-    for (ll i=0; i<n; i++)cin>>v[i];
-    ll ans=1;
-    set<ll> st;
-    for (int i = 1; i < (int) sqrt(n) + 1; i++) { 
-        if (n % i == 0){
-            st.insert(i);
-            st.insert(n/i);
+    ll n; cin>>n;
+    vector<ll> a(n);
+    for (ll i=0; i<n; i++)cin>>a[i];
+    ll ans=0;
+    for (ll i=1; i<=n; i++){
+        if (n%i==0){
+            ll k=n/i,g=0;
+            for (ll j=0; j<k; j++){
+                ll diff =0;
+                for (ll l=j; l<n; l+=k){
+                    diff=__gcd(diff,abs(a[j]-a[l]));
+                }
+                g=__gcd(g,diff);
+            }
+            ans+=(g!=1);
         }
     }
-    for (auto i : st){
-        cout<<i<<" ";
-    }
-    cout<<endl;
+    cout<<ans<<endl;
 }
 
 int main(){

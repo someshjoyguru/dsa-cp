@@ -1,24 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define  fastio()        ios::sync_with_stdio(false); cin.tie(NULL);cout.tie(NULL);
 #define ll long long
 
 void solve(){
     ll n,k;
     cin>>n>>k;
-    vector<ll> v(n);
-    for (ll i=0; i<k; i++){
-        v[i]=i+1;
+    ll i=1;
+    for (; i<=k; i++){
+        cout<<i<<" ";
     }
-    for (ll i=k; i<n; i++){
-        v[i]=n+k-i;
-    }
-    for (ll i=0; i<n; i++){
-        cout<<v[i]<<" ";
+    for (i=n;i>k; i--){
+        cout<<i<<" ";
     }
     cout<<endl;
 }
 
 int main(){
+    fastio()
     ll t=1;
     cin >> t;
     while(t--){
