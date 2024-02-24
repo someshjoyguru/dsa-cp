@@ -49,5 +49,9 @@ public:
 };
 
 int main(){
+	SGTree sg(5);
+	int v[5]={1,2,3,4,5};
+	sg.build(0,0,4,v);
+	cout<<sg.query(0,0,4,4,4)<<endl;
     return 0;
 }
