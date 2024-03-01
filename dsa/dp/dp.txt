@@ -37,3 +37,10 @@ Tabulation approach
 - First initialize the base condition values
 - Set an iterative loop which traverses the array
   and for every index calculates the optimised ans or count.
+
+Storage and Meaning
+Direction
+Travel and Solve
+
+chota problem se bada problem
+ (base case)  (actual case to solve)
