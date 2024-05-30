@@ -5,26 +5,26 @@ using namespace std;
 #define f(i,a,b) for (ll (i)=(a); (i)<(b); (i)++)
 #define vll vector<ll>
 #define in(n) ll n; cin>>n;
-#define inv(v,n) vll v(n); f(n)cin>>v[z];
+#define sin(s) string (s); cin>>(s);
+#define inv(v,n) vll (v)(n); f(i,0,n)cin>>(v)[i];
 #define all(v) (v).begin(),(v).end()
 #define sort(v) sort(pura(v));
 
-
 void solve(){
     in(n);
-    priority_queue<ll, vector<ll>, greater<ll>> pq;
+    sin(s);
+    ll one=0,curz=0,maxz=0;
     f(i,0,n){
-        ll x;
-        cin>>x;
-        pq.push(x);
+        if(s[i]=='1'){
+            one++;
+            curz=0;
+        }
+        else{
+            curz++;
+            maxz=max(maxz,curz);
+        }
     }
-    ll ans=0;
-    f(i,0,n){
-        ll it = pq.top();
-        pq.pop();
-        ans+=(abs(it-i));
-    }
-    cout<<ans<<endl;
+    cout<<one+maxz<<endl;
 }
 
 int main(){

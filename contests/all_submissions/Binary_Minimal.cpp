@@ -8,21 +8,24 @@ using namespace std;
 #define sin(s) string (s); cin>>(s);
 #define inv(v,n) vll (v)(n); f(i,0,n)cin>>(v)[i];
 #define all(v) (v).begin(),(v).end()
-#define sort(v) sort(pura(v));
+#define sort(v) sort(all(v));
 
 void solve(){
-    in(n);
-    sin(s);
-    ll a00=0, a11=0, a10=0, a01=0;
-    f(i,0,n-1){
-        if (s[i]=='0' && s[i+1]=='0') a00++;
-        else if (s[i]=='1' && s[i+1]=='1') a11++;
-        else if (s[i]=='0' && s[i+1]=='1') a01++;
-        else a10++;
-        i++;
-    }
-    ll ans = (a11+a00)*2 + ((a10>=2)?2:((a10==1)?1:0)) + ((a01!=0)?2:0);
-    cout<<ans<<endl;
+    in(n) in(k)
+    ll op=k;
+    sin(s)
+    ll cnt=0;
+    f(i,0,n) if(s[i]=='1') cnt++;
+    if (cnt>k){
+        f(i,0,n){
+            if (k>0 && s[i]=='1'){
+                s[i]='0';
+                k--;
+            }else if (k==0) break;
+        }
+        cout<<s;
+    }else f(i,0,n-k) cout<<'0';
+    cout<<endl;
 }
 
 int main(){
