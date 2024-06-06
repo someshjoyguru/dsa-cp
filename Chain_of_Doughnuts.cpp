@@ -13,14 +13,26 @@ using namespace std;
 #define pNO cout<<"NO"<<endl;
 
 void solve(){
-    in(n) in(p) in(k)
-    ll d = 0;
-    // base
-    d+=(min(p%k,n%k));
-    d+=((p%k)*(n/k));
-    //fwd
-    d+=(p/k + 1);
-    cout<<d<<endl;
+    in(n) in(m)
+    vin(a,m)
+    sort(a)
+    ll tmp=0;
+    ll cnt=0;
+    ll req = m-1;
+    f(i,0,m){
+        if (a[i]>req){
+            cnt+=req;
+            break;
+        }else if (a[i]<req){
+            cnt+=a[i];
+            req-=a[i];
+            req--;
+        }else{
+            cnt+=(req);
+            break;
+        }
+    }
+    cout<<cnt<<endl;
 }
 
 int main(){
