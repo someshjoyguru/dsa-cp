@@ -12,34 +12,34 @@ using namespace std;
 #define pYES cout<<"YES"<<endl;
 #define pNO cout<<"NO"<<endl;
 
-ll func(vll& a, ll n)
-{
-
-  vll pre(n + 2);
-  vll suf(n + 2);
-  suf[n] = a[n - 1];
-
-  pre[1] = a[0];
-  for (ll i = 2; i <= n; i += 1)
-    pre[i] = __gcd(pre[i - 1], a[i - 1]);
-
-
-  for (ll i = n - 1; i >= 1; i -= 1)
-    suf[i] = __gcd(suf[i + 1], a[i - 1]);
-
-  ll ans = max(suf[2], pre[n - 1]);
-
-  for (ll i = 2; i < n; i += 1)
-    ans = max(ans, __gcd(pre[i - 1], suf[i + 1]));
-
-  return ans;
+string func(int N, int W, int R, vll& weights) {
+    if (abs(R) >= W) {
+        return "waku waku";
+    }
+    
+    int ls = 0;
+    int rs= 0;
+    for (int wt : weights) {
+        if (wt < 0) {
+            ls += abs(wt);
+        } else {
+            rs += wt;
+        }
+    }
+    
+    if ( ls >= W && ls == rs) {
+        return "waku waku";
+    } else {
+        return "orewa kanashii desu";
+    }
 }
 
 void solve(){
-    in(n)
-    vin(v,n)
-    cout<<func(v,n)<<endl;
+    in(n) in(w) in(r)
+    vin(weights,n)
+    cout <<func(n, w,r, weights)<< endl;
 }
+
 
 int main(){
     fast;
@@ -47,3 +47,4 @@ int main(){
     cin >> t;
     while(t--)solve();
 }
+

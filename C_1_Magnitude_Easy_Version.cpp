@@ -12,33 +12,26 @@ using namespace std;
 #define pYES cout<<"YES"<<endl;
 #define pNO cout<<"NO"<<endl;
 
-ll func(vll& a, ll n)
-{
-
-  vll pre(n + 2);
-  vll suf(n + 2);
-  suf[n] = a[n - 1];
-
-  pre[1] = a[0];
-  for (ll i = 2; i <= n; i += 1)
-    pre[i] = __gcd(pre[i - 1], a[i - 1]);
-
-
-  for (ll i = n - 1; i >= 1; i -= 1)
-    suf[i] = __gcd(suf[i + 1], a[i - 1]);
-
-  ll ans = max(suf[2], pre[n - 1]);
-
-  for (ll i = 2; i < n; i += 1)
-    ans = max(ans, __gcd(pre[i - 1], suf[i + 1]));
-
-  return ans;
-}
-
 void solve(){
     in(n)
-    vin(v,n)
-    cout<<func(v,n)<<endl;
+    vin(a,n)
+    vll dp(n+1,0);
+
+    // function<ll(ll)> fa = [&](ll i) -> ll{
+    //     if (i<0) return 0;
+    //     ll c1 = a[i] + fa(i - 1);
+    //     ll c2 = abs(a[i] + fa(i - 1));
+    //     if (abs(c1)>abs(c2)) return c1;
+    //     else return c2;
+    // };
+    // cout << abs(fa(n-1)) << endl;
+     for (int i = 0; i < n; i++) {
+        dp[i+1] = max(dp[i] + a[i], abs(dp[i] + a[i]));
+    }
+
+    cout << dp[n] << endl;
+    // f(i,0,n) cout<<dp[i]<<" ";
+    // cout<<endl;
 }
 
 int main(){

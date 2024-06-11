@@ -12,38 +12,25 @@ using namespace std;
 #define pYES cout<<"YES"<<endl;
 #define pNO cout<<"NO"<<endl;
 
-ll func(vll& a, ll n)
-{
-
-  vll pre(n + 2);
-  vll suf(n + 2);
-  suf[n] = a[n - 1];
-
-  pre[1] = a[0];
-  for (ll i = 2; i <= n; i += 1)
-    pre[i] = __gcd(pre[i - 1], a[i - 1]);
-
-
-  for (ll i = n - 1; i >= 1; i -= 1)
-    suf[i] = __gcd(suf[i + 1], a[i - 1]);
-
-  ll ans = max(suf[2], pre[n - 1]);
-
-  for (ll i = 2; i < n; i += 1)
-    ans = max(ans, __gcd(pre[i - 1], suf[i + 1]));
-
-  return ans;
-}
-
 void solve(){
     in(n)
-    vin(v,n)
-    cout<<func(v,n)<<endl;
+    vector<vll> pts, dp(n,vll(3,0));
+    f(i,0,n){
+        vin(h,3)
+        pts.push_back(h);
+    }
+    f(i,0,3)dp[0][i]=pts[0][i];
+    f(i,1,n){
+        dp[i][0]=pts[i][0]+max(dp[i-1][1],dp[i-1][2]);
+        dp[i][1]=pts[i][1]+max(dp[i-1][0],dp[i-1][2]);
+        dp[i][2]=pts[i][2]+max(dp[i-1][0],dp[i-1][1]);
+    }
+    cout<<max({dp[n-1][0],dp[n-1][1],dp[n-1][2]});
 }
 
 int main(){
     fast;
     int t=1;
-    cin >> t;
+    // cin >> t;
     while(t--)solve();
 }

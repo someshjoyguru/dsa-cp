@@ -12,38 +12,24 @@ using namespace std;
 #define pYES cout<<"YES"<<endl;
 #define pNO cout<<"NO"<<endl;
 
-ll func(vll& a, ll n)
-{
-
-  vll pre(n + 2);
-  vll suf(n + 2);
-  suf[n] = a[n - 1];
-
-  pre[1] = a[0];
-  for (ll i = 2; i <= n; i += 1)
-    pre[i] = __gcd(pre[i - 1], a[i - 1]);
-
-
-  for (ll i = n - 1; i >= 1; i -= 1)
-    suf[i] = __gcd(suf[i + 1], a[i - 1]);
-
-  ll ans = max(suf[2], pre[n - 1]);
-
-  for (ll i = 2; i < n; i += 1)
-    ans = max(ans, __gcd(pre[i - 1], suf[i + 1]));
-
-  return ans;
-}
-
 void solve(){
     in(n)
-    vin(v,n)
-    cout<<func(v,n)<<endl;
+    vll h(n+1,0);
+    f(i,1,n+1)cin>>h[i];
+    vll dp(n+1,0);
+    dp[1]=0;
+    f(i,2,n+1){
+        ll c1=0, c2=INT_MAX;
+        c1=abs(h[i]-h[i-1])+dp[i-1];
+        if (i-2>0) c2=abs(h[i]-h[i-2])+dp[i-2];
+        dp[i]=min(c1,c2);
+    }
+    cout<<dp[n];
 }
 
 int main(){
     fast;
     int t=1;
-    cin >> t;
+    // cin >> t;
     while(t--)solve();
 }
