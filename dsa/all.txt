@@ -38,3 +38,7 @@ public:
         return f(arr, i, j);
     }
 };
+
+Dp on graphs applied only in DAG 
+can use topo sort 
+
