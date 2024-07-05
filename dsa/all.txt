@@ -42,3 +42,16 @@ public:
 Dp on graphs applied only in DAG 
 can use topo sort 
 
+int minJumps(int arr[], int n){
+    for (int i=0; i<n-1; i++){
+        curMax=max(curMax,i+arr[i]);
+        if (i==curReach){
+            jumps++;
+            curReach=curMax;
+        }
+        if (arr[i]==0 && i==curMax)
+            return -1;
+    }
+    return jumps;
+}
+
