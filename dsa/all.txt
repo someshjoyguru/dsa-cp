@@ -59,5 +59,4 @@ int minJumps(int arr[], int n){
 
 
 
-// Google OA
 
