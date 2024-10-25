@@ -1,9 +1,3 @@
-// 2024-02-29 20:05:35
-// Viraj Chandra
-// Linkedin: https://www.linkedin.com/in/viraj-chandra-4073a8223/
-// Codeforces: https://codeforces.com/profile/khnhcodingkarlo
-// Codechef: https://www.codechef.com/users/codecozkhnhs
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -118,8 +112,7 @@ int32_t main()
     #ifndef ONLINE_JUDGE
         freopen("Error.txt","w",stderr);
     #endif
-    //Rating? Neh. In love with experience.
-    //Code Karlo, Coz KHNH :)
+    
     int t;
     cin>>t;
     while(t--)
