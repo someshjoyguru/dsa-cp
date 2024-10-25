@@ -13,20 +13,16 @@ using namespace std;
 #define pNO cout<<"NO"<<endl;
 
 void solve(){
-    in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
-    }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    in(x1) in(y1)
+    in(x2) in(y2)
+    if ((x1<=y1 && y2<=x2)||(y1<=x1 && x2<=y2)){
+        pNO
+    }else pYES
 }
 
 int main(){
     fast;
     int t=1;
-    // cin >> t;
+    cin >> t;
     while(t--)solve();
 }

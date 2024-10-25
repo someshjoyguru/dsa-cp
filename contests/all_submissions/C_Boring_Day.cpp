@@ -12,21 +12,34 @@ using namespace std;
 #define pYES cout<<"YES"<<endl;
 #define pNO cout<<"NO"<<endl;
 
-void solve(){
-    in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
+void solve()
+{  
+    in(n) in(l) in(r)
+    vin(a,n);
+    ll ans = 0;
+    long long sum = 0;
+    ll start = 0;
+
+    for (ll end = 0; end < n; ++end) {
+        sum += a[end];
+
+        while (sum > r && start <= end) {
+            sum -= a[start++];
+        }
+
+        if (sum >= l && sum <= r) {
+            ++ans;
+            sum = 0;
+            start = end + 1;
+        }
     }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    cout << ans << endl;
 }
+
 
 int main(){
     fast;
     int t=1;
-    // cin >> t;
+    cin >> t;
     while(t--)solve();
 }

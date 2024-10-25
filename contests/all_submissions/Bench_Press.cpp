@@ -12,21 +12,26 @@ using namespace std;
 #define pYES cout<<"YES"<<endl;
 #define pNO cout<<"NO"<<endl;
 
-void solve(){
-    in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
+string solve(){
+    in(n) in(w) in(wr)
+    vin(v,n)
+    if (wr>=w) return "YES";
+    map<ll,ll> mp;
+    ll ans=wr;
+    f(i,0,n){
+        mp[v[i]]++;
+        if(mp[v[i]]==2){
+            ans+=(v[i]*2);
+            mp[v[i]]=0;
+        }
     }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    if (ans>=w) return "YES";
+    else return "NO";
 }
 
 int main(){
     fast;
     int t=1;
-    // cin >> t;
-    while(t--)solve();
+    cin >> t;
+    while(t--)cout<<solve()<<endl;
 }

@@ -13,20 +13,14 @@ using namespace std;
 #define pNO cout<<"NO"<<endl;
 
 void solve(){
-    in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
-    }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    in(n)
+    vin(v,n)
+    cout<<v[n-1]+(*max_element(v.begin(),v.end()-1))<<endl;
 }
 
 int main(){
     fast;
     int t=1;
-    // cin >> t;
+    cin >> t;
     while(t--)solve();
 }

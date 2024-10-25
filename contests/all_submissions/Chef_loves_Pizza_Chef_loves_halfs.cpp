@@ -12,21 +12,24 @@ using namespace std;
 #define pYES cout<<"YES"<<endl;
 #define pNO cout<<"NO"<<endl;
 
-void solve(){
-    in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
+ll getMSB(ll n) {
+    if (n == 0) return 0; 
+    ll msb = 1;
+    while (msb <= n) {
+        msb <<= 1;
     }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    return msb >> 1;
+}
+
+void solve(){
+    in(n)
+    ll d = n-getMSB(n);
+    cout<<d*2<<endl;
 }
 
 int main(){
     fast;
     int t=1;
-    // cin >> t;
+    cin >> t;
     while(t--)solve();
 }

@@ -13,20 +13,32 @@ using namespace std;
 #define pNO cout<<"NO"<<endl;
 
 void solve(){
-    in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
+    in(n) in(s) in(m)
+    vector<vll> a;
+    a.push_back({-1,0});
+    f(i,0,n){
+        vin(v,2)
+        a.push_back(v);
     }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    a.push_back({m,m+1});
+    ll maxi=0;
+    ll end=0;
+    f(i,0,n+2){
+        if (end==a[i][0]){
+            end=a[i][1];
+        }else if (end<a[i][0]){
+            maxi=max(maxi,a[i][0]-end);
+            end=a[i][1];
+        }
+        // cout<<maxi<<" "<<end<<endl;
+    }
+    if (maxi>=s)pYES
+    else pNO
 }
 
 int main(){
     fast;
     int t=1;
-    // cin >> t;
+    cin >> t;
     while(t--)solve();
 }

@@ -12,21 +12,26 @@ using namespace std;
 #define pYES cout<<"YES"<<endl;
 #define pNO cout<<"NO"<<endl;
 
-void solve(){
-    in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
+const ll mod = 998244353;
+
+int nCr(int n, int r) {
+    int sum = 1;
+    for(int i = 1; i <= r; i++){
+        sum = (sum * (n - r + i)/i)%mod;
     }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    // for(int i = 1; i <= r; i++){
+    //     sum = (sum / i)%mod;
+    // }
+    return (int) sum;
+}
+void solve(){
+    in(n)
+    cout<<nCr(n, 6)<<endl;   
 }
 
 int main(){
     fast;
     int t=1;
-    // cin >> t;
+    cin >> t;
     while(t--)solve();
 }

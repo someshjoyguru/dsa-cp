@@ -13,15 +13,13 @@ using namespace std;
 #define pNO cout<<"NO"<<endl;
 
 void solve(){
-    in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
+    in(n)
+    ll c=0;
+    f(i,0,n){
+        sin(s)
+        if (s=="Takahashi")c++;
     }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    cout<<c;
 }
 
 int main(){

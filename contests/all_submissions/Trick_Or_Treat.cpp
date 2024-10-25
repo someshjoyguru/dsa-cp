@@ -14,19 +14,27 @@ using namespace std;
 
 void solve(){
     in(n) in(m)
-    vll adj[n+1];
-    f(i,0,m){
-        in(u) in(v)
-        adj[u].push_back(v);
+    vin(a,n)
+    vin(b,n)
+    sort(a)
+    map<ll, ll> mp;
+    f(i,0,n){
+        mp[b[i]%m]++;
     }
-    auto visit = [&](ll u)->void{
-        dp[vertex]
-    };
+    ll c = 0;
+    for (auto x : a) {
+        ll rem = x % m;
+        ll comp = (m- rem) % m;
+        if (mp.find(comp) != mp.end()) {
+            c += mp[comp];
+        }
+    }
+    cout<<c<<endl;
 }
 
 int main(){
     fast;
     int t=1;
-    // cin >> t;
+    cin >> t;
     while(t--)solve();
 }
