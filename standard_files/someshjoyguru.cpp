@@ -99,10 +99,23 @@ ll moduloMultiplication(ll a,ll b,ll mod){ll res = 0;a %= mod;while (b){if (b & 
 ll powermod(ll x, ll y, ll p){ll res = 1;x = x % p;if (x == 0) return 0;while (y > 0){if (y & 1)res = (res*x) % p;y = y>>1;x = (x*x) % p;}return res;}
 ll modinv(ll p,ll q){ll ex;ex=M-2;while (ex) {if (ex & 1) {p = (p * q) % M;}q = (q * q) % M;ex>>= 1;}return p;}
 
-void solve()
-{
+void solve(){
+    inll(n)
+    vl v(n,0);
+    for (int i=0; i<n; i++){
+        cin>>v[i];
+    }
+    // for (auto &x: v)cin>>x;
+    vl dp(1e5+10,0), dp1(1e5+10,0);
+    for (ll c:v)dp[c]+=c;
+    ll maxi=0;
     
-    
+    foreach(i,2,1e5+10,1){
+        // dp1[i]=max(dp1[i],dp1[i-2]+dp[i]);
+        dp[i]=max({dp[i-1],dp[i-2]+dp[i]});
+        maxi=max(maxi,dp[i]);
+    }
+    cout<<maxi;
 }
 
 
@@ -114,7 +127,7 @@ int32_t main()
     #endif
     
     int t=1;
-    cin>>t;
+    // cin>>t;
     while(t--)
     {
     solve();

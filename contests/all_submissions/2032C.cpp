@@ -8,7 +8,7 @@ using namespace std;
 
 #define  retn            return
 #define  ctnu            continue
-// #define  endl            '\n'
+#define  endl            '\n'
 #define  pb              push_back
 #define  ppb             pop_back
 #define  rep(i,a,n)      for(ll i =a;i<n;i++)
@@ -94,14 +94,6 @@ template <class T, class V> void _print(multimap <T, V> v) {cerr << "[ "; for (a
 
 
 
-ll query(ll a, ll b)
-{
-    cout<<"? "<<a<<" "<<b<<endl;
-    ll val;
-    cin>>val;
-    retn val;
-}
-
 
 
 
@@ -109,7 +101,33 @@ ll query(ll a, ll b)
 void solve()
 
 {
-    
+    ll n;
+    cin>>n;
+    vll v(n);
+    read(v,n);
+
+    sort(all(v));
+
+    vll sum;
+
+    rep(i,0,n-1)
+    {
+        sum.pb(v[i] + v[i+1]);
+    }
+    ll ans = n;
+    debug(sum);
+    for(ll i = n-1; i >= 0; i--)
+    {
+        ll cnt = (n-1-i);
+        auto it = ub(sum.begin(), sum.begin() + (i-1), v[i]);
+        it--;
+        ll val = (it-sum.begin()+1);
+        cnt += val;
+        debug(val);
+        ans = min(ans, cnt);
+    }
+    debug(ans);
+    cout<<ans<<endl;
 }
 
 
@@ -140,7 +158,7 @@ int main()
       {
         
     
-           // cout<<"Case #"<<ttt<<": ";
+          //  cout<<"Case #"<<ttt<<": ";
     
     
         solve();

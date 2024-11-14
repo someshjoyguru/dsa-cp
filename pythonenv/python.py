@@ -1,50 +1,66 @@
-from collections import defaultdict
+import math
 
+def solve_single_case(n, b, c):
+    if n == 1:
+        return 0 if c == 0 else 1
 
-def hyderatedtheNode(parent, waterLevel, overHyderatd, underHyderated):
-    g = defaultdict(list)
+    max_valid = n - 1
+    last_element = b * (n - 1) + c
 
-    h_penalty = [0] * len(waterLevel)
-    u_penalty = [0] * len(waterLevel)
-
-    createGraph(parent, g)
-    dfs(0, waterLevel, overHyderatd, underHyderated, 1, h_penalty, g)
-    dfs(0, waterLevel, underHyderated, overHyderatd, - 1, u_penalty, g)
-    # print(h_penalty)
-    # print(u_penalty)
-    # print(g)
-    # print(list(enumerate(waterLevel)))
-    ans = float('inf')
-    p = u_penalty[0]
-    for i, h in enumerate(h_penalty):
-        ans = min(ans, h + (p - u_penalty[i]))
-    print(ans)
-
-
-def createGraph(parent, g):
-    for i in range(1, len(parent)):
-        g[parent[i]].append(i)
-
-
-def dfs(src, waterLeve, oH, uH, apple, val, g):
-    if not g.get(src, None):
-        if waterLeve[src] == apple:
-            val[src] = oH
-            return oH
+    if b == 1 and c == 0:
         return 0
 
-    if g.get(src, None):
-        penalty = 0
-        if waterLeve[src] == apple:
-            penalty = oH
-        for t in g[src]:
-            penalty += dfs(t, waterLeve, oH, uH, apple, val, g)
-            # print(src, t, penalty)
-    val[src] = penalty
-    return penalty
+    if b == 0:
+        if n == 1:
+            return 0 if c == 0 else 1
+        if c >= n:
+            return n
+        if n > 2 and c < n - 1:
+            return -1
+        if n == 2:
+            if c == 1 or c == 0:
+                return 1
+            return 2
+        return -1
 
+    if b > n:
+        return -1
+    if c > max_valid and b > 0:
+        return n
+    if last_element < max_valid:
+        return -1
 
-hyderatedtheNode([-1, 0, 1], [1, 1, 1], 3, 5)  # 0
-hyderatedtheNode([-1, 0, 0], [1, -1, -1], 10, 15)   # 10
-hyderatedtheNode([-1, 0, 0, 1], [0, 0, 0, 0], 10, 15)  # 0 
-hyderatedtheNode([-1, 0, 1, 0, 1, 2, 2, 2, 5, 5], [-1, -1, 0, -1, 0, 0, 1, 0, 0, 1], 2, 3)  # 4
+    if b > 0:
+        oversized_start = max(0, (max_valid - c) // b + 1)
+        operations = n - oversized_start
+
+        if operations < n and b > 1:
+            return -1
+        return operations
+
+    if b < 0:
+        if c > max_valid or last_element > max_valid:
+            return -1
+        if c < 0 or last_element < 0:
+            return -1
+
+        operations = 0
+        for i in range(n):
+            if b * i + c > max_valid:
+                operations += 1
+
+        if operations < n and abs(b) > 1:
+            return -1
+        return operations
+
+    return -1
+
+def main():
+    t = int(input())
+
+    for _ in range(t):
+        n, b, c = map(int, input().split())
+        result = solve_single_case(n, b, c)
+        print(result)
+
+main()

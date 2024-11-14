@@ -109,7 +109,72 @@ ll query(ll a, ll b)
 void solve()
 
 {
-    
+    ll n;
+    cin>>n;
+    vll ans(n);
+    ll node = -1;
+    for(ll i = 2; i <= n-1; i++)
+    {
+        ll val = query(1, i);
+        if(val == 0)
+        {
+            node = i;break;
+        }
+    }
+    set<ll> term;
+    for(ll i = 2; i <= node; i++)
+    {
+        term.insert(i);
+    }
+    ans[node] = 1;
+    debug(term);
+    debug(node);
+    for(ll i = node+1; i < n; i++)
+    {
+        if(term.size() == 1)
+        {
+            ans[i] = (*term.begin());
+            term.clear();
+            term.insert(i);
+        }
+        else
+        {
+            bool ok = false;
+            for(auto val : term)
+            {
+                ll tr = query(val, i);
+                debug(tr);
+                if(tr == 0)
+                {
+                    ans[i] = val;
+                    debug(val);
+                    while(term.size())
+                    {
+                        if((*term.begin()) <= val)
+                        {
+                            term.erase(term.begin());
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    ok = true;
+                    debug(i);
+                    term.insert(i);break;
+                }
+            }
+
+        }
+    }
+    debug(ans);
+    cout<<"! ";
+    rep(i,1,ans.size())
+    {
+        cout<<ans[i]<<" ";
+    }
+    cout<<endl;
+
 }
 
 

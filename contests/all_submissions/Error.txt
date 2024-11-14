@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+#include <climits>
+
+using namespace std;
+
+void solve() {
+    int n, k, q;
+    cin >> n >> k >> q;
+    
+    // Read the input values and precompute OR values
+    vector<vector<int>> a(n, vector<int>(k));
+    vector<vector<int>> b(n, vector<int>(k));  // To store precomputed OR values
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < k; j++) {
+            cin >> a[i][j];
+        }
+    }
+
+    // Precompute b[i][j] as the OR of a[0][j] to a[i][j] for each i and j
+    for (int j = 0; j < k; j++) {
+        b[0][j] = a[0][j];  // Initialize the first country values
+        for (int i = 1; i < n; i++) {
+            b[i][j] = b[i - 1][j] | a[i][j];  // OR with previous country in the same region
+        }
+    }
+
+    // Process each query
+    while (q--) {
+        int m;
+        cin >> m;
+        vector<pair<int, pair<char, int>>> requirements(m);
+
+        for (int i = 0; i < m; i++) {
+            int r, c;
+            char o;
+            cin >> r >> o >> c;
+            requirements[i] = {r - 1, {o, c}};  // Store zero-indexed region
+        }
+
+        int result = -1;
+        for (int i = 0; i < n; i++) {
+            bool satisfiesAll = true;
+            for (const auto& req : requirements) {
+                int region = req.first;
+                char op = req.second.first;
+                int limit = req.second.second;
+                
+                if (op == '<' && !(b[i][region] < limit)) {
+                    satisfiesAll = false;
+                    break;
+                }
+                if (op == '>' && !(b[i][region] > limit)) {
+                    satisfiesAll = false;
+                    break;
+                }
+            }
+            if (satisfiesAll) {
+                result = i + 1;  // 1-based indexing for the country
+                break;
+            }
+        }
+
+        cout << result << endl;
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    solve();
+
+    return 0;
+}

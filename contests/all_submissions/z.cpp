@@ -40,6 +40,7 @@ int main(){
     ds.unionDisjointSet(4, 5);
     ds.unionDisjointSet(6, 7);
     ds.unionDisjointSet(5, 6);
+    
     // if 3 and 7 same or not
     if (ds.findUParent(3) == ds.findUParent(7)) {
         cout << "Same\n";

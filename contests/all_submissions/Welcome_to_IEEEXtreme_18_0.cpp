@@ -101,8 +101,7 @@ ll modinv(ll p,ll q){ll ex;ex=M-2;while (ex) {if (ex & 1) {p = (p * q) % M;}q = 
 
 void solve()
 {
-    
-    
+    cout<<"Hello IEEEXtreme team! Thank you for organizing this amazing event and gathering so many enthusiastic programmers from all over the world. IEEEXtreme is always a fantastic opportunity to test skills, solve challenging problems, and learn new approaches from peers globally. The excitement and dedication of all the volunteers and organizers make this event one of a kind. Cheers to all your hard work, and here's to another successful IEEEXtreme filled with code, camaraderie, and creativity. Let’s have a memorable 24 hours. Veni Vidi Coded!";
 }
 
 
@@ -114,7 +113,7 @@ int32_t main()
     #endif
     
     int t=1;
-    cin>>t;
+    // cin>>t;
     while(t--)
     {
     solve();
