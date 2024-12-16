@@ -35,48 +35,29 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+// bf-opti-proof
+/*
+y->1 to m
+v=x^y
+v<x && v<y -- x>0 && y>0
+
+1 2 3 6 12 -> divisors of 12
+ob: divisors of a must be <= a/2 
+x me limit hai but y me m tk ja sakte hai
+y ka bit - 2*x wale se adhik ho jayega then y kabhi divisor nhi hoga
+*/
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
+    in(x) in(m)
+    ll cnt=0;
+    f(y,1,min(2*x,m+1)){
+        if (x!=y){
+            ll v=x^y;
+            if (y%v==0 || x%v==0){
+                cnt++;
+            }
         }
-        return;
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    cout<<cnt<<endl;
 }
 
 int main() {

@@ -35,48 +35,23 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
+    in(k) in(l1) in(r1) in(l2) in(r2)
+    ll cnt = 0;
+    ll pp = 1;
+
+    while (pp <= r2) {
+        ll xmin = max((l2 + pp - 1) / pp, l1);
+        ll xmax = min(r2 / pp, r1);
+
+        if (xmin <= xmax) {
+            cnt += (xmax - xmin + 1);
         }
-        return;
+        if (pp > r2 / k) break;
+        pp *= k;
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    cout<<cnt<<endl;
 }
 
 int main() {

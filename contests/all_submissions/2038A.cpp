@@ -35,53 +35,42 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
+    in(n) in(k)
+    vin(a,n)
+    vin(b,n)
+    ll pos=0;
+    f(i,0,n)pos+=(a[i]/b[i]);
+    debug(pos);
+    if (pos<k){
+        f(i,0,n)cout<<"0 ";
+        return;
+    }
+    if(pos==k){
+        f(i,0,n)cout<<(a[i]/b[i])<<" ";
+        return;
+    }
+    pos=k;
+    vll v;
+    rf(i,n-1,0){
+        ll cur=a[i]/b[i];
+        if (pos-cur>=0){
+            v.push_back(cur);
+            pos-=cur;
+        }else if(pos==0){
+            v.push_back(0);
         }else{
-          cout<<-1<<endl;
+            v.push_back(pos);
+            pos=0;
         }
-        return;
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    rf(i,n-1,0)cout<<v[i]<<" ";
 }
 
 int main() {
     fast;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) solve();
 }

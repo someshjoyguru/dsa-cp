@@ -35,48 +35,23 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+// 1 0 2 1 -4 -1
+// 1 -1 2 4 -3 2
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
+    in(n)
+    vin(a,n)
+    vin(b,n)
+    ll ans=LLONG_MIN;
+    f(i,0,n){
+        ll sum=a[i]+b[i];
+        f(j,0,n){
+            if (j!=i){
+                sum+=max(a[j],b[j]);
+            }
         }
-        return;
+        ans=max(ans,sum);
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    cout<<ans<<endl;
 }
 
 int main() {

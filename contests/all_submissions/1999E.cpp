@@ -35,48 +35,29 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+/*
+84 - 28+9+3+1
+19 - 6+2
+*/
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
+    in(l) in(r)
+    ll cnt=0;
+    ll tmp=l;
+    while(tmp!=0){
+        tmp/=3;
+        cnt++;
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
+    l++;
+    cnt*=2;
+    while(true){
+        ll bb=((ll)(log10(l)/log10(3))+1);
+        ll up=pow(3,bb)-1;
+        cnt+=(min(up,r)-l+1)*bb;
+        if (up>r) break;
+        l=up+1;
     }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    // f(i,l,r+1) cnt+=((ll)(log10(i)/log10(3))+1);
+    cout<<cnt<<endl;
 }
 
 int main() {

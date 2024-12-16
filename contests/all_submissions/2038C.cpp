@@ -35,48 +35,30 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
+    in(n)
+    vin(v,n)
+    map<ll,ll> mp;
+    f(i,0,n)mp[v[i]]++;
     vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
+    for(auto it: mp){
+        ll cnt=it.second/2;
+        while(cnt--){
+            vv.push_back(it.first);
+        }
     }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
+    n=vv.size();
+    if (n<4){
+        pNO
+        return;
     }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    sort(vv)
+    pYES
+    ll a=vv[0], b=vv[1];
+    ll c=vv[n-2], d=vv[n-1];
+    cout<<a<<" "<<b<<" "<<c<<" "<<b<<" ";
+    cout<<c<<" "<<d<<" "<<a<<" "<<d<<" ";
 }
 
 int main() {

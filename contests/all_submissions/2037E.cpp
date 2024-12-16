@@ -35,48 +35,73 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+ll query(ll l, ll r){
+    cout<<"? "<<l<<" "<<r<<endl;
+    ll val;
+    cin>>val;
+    return val;
+}
+
+// reference: https://codeforces.com/contest/2037/submission/292072717
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
+    in(n)
+    if(n == 2)
+    {
+        ll ans = query(1, 2);
+        if(ans == 1)
+        {
+            cout<<"! 01"<<endl;return;
         }
-        return;
+        else
+        {
+            cout<<"! IMPOSSIBLE"<<endl;return;
+        }
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
+ 
+    string s1;
+    vll ans;
+    for(ll i = 2; i <= n; i++)
+    {
+        ll val = query(1,i);
+        ans.push_back(val);
     }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
+ 
+    if(ans.back() == 0)
+    {
+        cout<<"! IMPOSSIBLE"<<endl;return;
     }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
+    ll j = -1;
+    f(i,0,ans.size())
+    {
+        if(ans[i] > 0)
+        {
+            j = i;break;
+        }
     }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
+    s1.push_back('1');
+    f(i,0,ans[j])
+    {
+        s1.push_back('0');
     }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
+    while(s1.size() != j+2)
+    {
+        s1.push_back('1');
     }
+    reverse(all(s1));
+ 
+    for(ll i = j+1; i < ans.size(); i++)
+    {
+        if(ans[i] > ans[i-1])
+        {
+            s1.push_back('1');
+        }
+        else
+        {
+            s1.push_back('0');
+        }
+    }
+ 
+    cout<<"! "<<s1<<endl;
 }
 
 int main() {

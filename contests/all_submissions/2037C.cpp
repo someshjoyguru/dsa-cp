@@ -35,52 +35,52 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
+// sieve template
+const int MAX_N = 200100;
+vector<bool> isPrime(MAX_N + 1, true);
+
+void computeSieve() {
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i * i <= MAX_N; ++i) {
+        if (isPrime[i]) {
+            for (int j = i * i; j <= MAX_N; j += i) {
+                isPrime[j] = false;
+            }
         }
-        return;
     }
-    if (l==n || d>n-1 ){
+}
+
+void solve() {
+    in(n)
+    if (n<=4){
         cout<<-1<<endl;
         return;
     }
-    if (l-2>(n-(d+1))){
+    ll oo=n-(n%2==0);
+    ll ck=-1;
+    for (ll i=2; i<=n; i+=2){
+        if (!isPrime[oo+i]){
+            ck=i;
+            break;
+        }
+    }
+    if (ck==-1){
         cout<<-1<<endl;
         return;
     }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
+    for (ll i=1; i<=oo; i+=2){
+        cout<<i<<" ";
     }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
+    cout<<ck<<" ";
+    for (ll i=2; i<=n; i+=2){
+        if (i!=ck) cout<<i<<" ";
     }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    cout<<endl;
 }
 
 int main() {
     fast;
+    computeSieve();
     int t = 1;
     cin >> t;
     while(t--) solve();

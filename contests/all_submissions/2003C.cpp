@@ -35,47 +35,38 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
+    in(n)
+    sin(s)
+    vll v(26,0);
+    f(i,0,n)v[s[i]-'a']++;
+    string ss;
+    f(i,0,n){
+        if (v[i]){
+            ss+=(i+'a');
+            v[i]--;
+            if (ss.size()==4) break;
         }
+    }
+    if (ss.size()<4){
+        f(i,0,n){
+            if (v[i]){
+                f(j,0,v[i]){
+                    ss+=(i+'a');
+                }
+            }
+        }
+        cout<<ss<<endl;
         return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
+    }else{
+        priority_queue<pair<ll,ll>> pq;
+        f(i,0,26) pq.push({i,v[i]});
+        set<ll> st;
+        f(i,0,4)ss.p
+        f(i,0,n-4){
+
+        }
     }
 }
 

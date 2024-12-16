@@ -35,48 +35,26 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
+    in(n)
     vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
+    f(i,0,n){
+        in(x) in(y)
+        v.push_back({x,y});
     }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
+    in(xs) in(ys) in(xt) in(yt)
+    ll d2=(xs-xt)*(xs-xt)+(ys-yt)*(ys-yt);
+    debug(d2);
+    f(i,0,n){
+        ll dd2=(xt-v[i][0])*(xt-v[i][0])+(yt-v[i][1])*(yt-v[i][1]);
+        debug(dd2);
+        if (d2>=dd2){
+            pNO
+            return;
+        }
     }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    pYES
 }
 
 int main() {

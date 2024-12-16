@@ -15,7 +15,6 @@ using namespace std;
 #define rsort(v) sort(v) reverse(all(v));
 #define pYES cout<<"YES\n";
 #define pNO cout<<"NO\n";
-const ll mod = 1000000007;
 
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x << " = "; _print(x); cerr << endl;
@@ -35,53 +34,33 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
+    in(n)
+    sin(s)
+    ll p=0, m=0;
+    f(i,0,n)(s[i]=='+')?p++:m++;
+    in(q)
+    f(i,0,q){
+        in(x) in(y)
+        if (x==y){
+            if (p==m)pYES
+            else pNO
         }else{
-          cout<<-1<<endl;
+            ll den = x-y;
+            ll num=y*(m-p);
+            if (num%den==0){
+                ll k=num/den;
+                if (k<-m || k>p)pNO
+                else pYES
+            }else pNO
         }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
     }
 }
 
 int main() {
     fast;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) solve();
 }

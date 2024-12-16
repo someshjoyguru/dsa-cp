@@ -35,48 +35,22 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
+    in(n)
+    vin(v,n)
+    sin(s)
+    ll i=0, j=n-1;
+    vll p=v;
+    f(i,1,n)p[i]+=p[i-1];
+    ll sum=0;
+    while(i<=j){
+        while(i<n && s[i]=='R')i++;
+        while(j>=0 && s[j]=='L')j--;
+        if (i<j) sum+=(p[j]-((i-1>=0)?p[i-1]:0));
+        i++; j--;
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    cout<<sum<<endl;
 }
 
 int main() {

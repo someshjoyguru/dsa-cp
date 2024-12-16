@@ -36,47 +36,28 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 /* *********************Template ends here************** */
 
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
+    in(k)
+    // vll v(k+1,1);
+    // v[0]=0;
+    // f(i,1,k+1){
+    //     for (ll j=i;j<k; j+=i){
+    //         v[j]=1-v[j];
+    //     }
     // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
+    // debug(v);
+    // cout<<pre[MM]<<endl;
+    ll lb=2000000000000000000;
+    ll lo=1, hi=2000000000000000000;
+    while(lo<=hi){
+        ll md=lo+(hi-lo)/2;
+        if (md>=k || md*md+md>=k){
+            lb=min(lb,md);
+            hi=md-1;
+        }else{
+            lo=md+1;
+        }
     }
+    cout<<k+lb<<endl;
 }
 
 int main() {

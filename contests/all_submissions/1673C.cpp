@@ -15,7 +15,7 @@ using namespace std;
 #define rsort(v) sort(v) reverse(all(v));
 #define pYES cout<<"YES\n";
 #define pNO cout<<"NO\n";
-const ll mod = 1000000007;
+const ll MOD = 1e9+7;
 
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x << " = "; _print(x); cerr << endl;
@@ -34,53 +34,54 @@ void _print(set<T> s) { cerr << "{ "; for (T i : s) { _print(i); cerr << " "; } 
 template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
+const int N = 40004, M = 502;
+long long dp[N][M];
+
+// Referred author's solution
+int reverse(int n)
+{
+    int r=0;
+    while(n>0)
+    {
+        r=r*10+n%10;
+        n/=10;
+    }
+    return r;
+}
+
+bool palindrome(int n)
+{
+    return (reverse(n)==n); 
+}
 
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    in(n)
+    cout<<dp[n][M-1]<<endl;
 }
 
 int main() {
     fast;
+    vector<int> palin;
+    palin.push_back(0);
+    for(int i=1;i<2*N;i++)
+    {
+        if(palindrome(i))
+            palin.push_back(i);
+    }
+    debug(palin.size());
+    for(int j=1;j<M;j++)
+        dp[0][j]=1;
+    for(int i=1;i<N;i++)
+    {
+        dp[i][0]=0;
+        for(int j=1;j<M;j++)
+        {
+            if(palin[j]<=i)
+                dp[i][j]=(dp[i][j-1]+dp[i-palin[j]][j])%MOD;
+            else
+                dp[i][j]=dp[i][j-1];
+        }
+    }
     int t = 1;
     cin >> t;
     while(t--) solve();

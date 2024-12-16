@@ -35,53 +35,58 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+	in(n) in(k)
+	vector<set<ll>> dp(n + 1);
+	f(i,1,n+1){
+		f(j,1,n+1){
+			dp[i].insert(j);
+		}
+	}
+
+	f(i,1,n+1){
+		debug(i);
+		debug(dp[i]);
+	}
+	vvll v(k);
+	for (int i = 0; i < k; ++i) {
+		in(l) in(r) in(m)
+		v[i] = {l, r, m};
+	}
+	for (auto it: v){
+		f(i,it[0], it[1]+1){
+			dp[i].erase(it[2]);
+		}
+	}
+
+	f(i,1,n+1){
+		debug(i);
+		debug(dp[i]);
+	}
+	vll ans(n + 1, 0);
+	bool fl = true;
+	f(i,1,n+1){
+		if (dp[i].empty()) {
+			fl = false;
+			break;
+		}
+		ans[i] = *dp[i].begin();
+	}
+
+	if (!fl) {
+		cout << -1 << "\n";
+	} else {
+		f(i,1,n+1){
+			cout << ans[i] << " ";
+		}
+		cout << "\n";
+	}	
 }
 
 int main() {
-    fast;
-    int t = 1;
-    cin >> t;
-    while(t--) solve();
+	fast;
+	int t = 1;
+	cin >> t;
+	while(t--) solve();
 }

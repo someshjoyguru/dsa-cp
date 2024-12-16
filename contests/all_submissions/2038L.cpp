@@ -11,8 +11,8 @@ using namespace std;
 #define vin(v,n) vll (v)(n); f(i,0,n)cin>>(v)[i];
 #define all(v) (v).begin(),(v).end()
 #define rall(v) (v).rbegin(),(v).rend()
-#define sort(v) sort(all(v));
-#define rsort(v) sort(v) reverse(all(v));
+// #define sort(v) sort(all(v));
+// #define rsort(v) sort(v) reverse(all(v));
 #define pYES cout<<"YES\n";
 #define pNO cout<<"NO\n";
 const ll mod = 1000000007;
@@ -35,53 +35,27 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
+    in(n)
+    // 18 21 25
+    // 60
+    // 18+21+21=60
+    // 18+25=43 (17)
+    // 21+25=46 (14)
+    // 25+25=50 (10)
+    // 18+18+18=57 (3)
+    vvll v={{1,2,0},{1,0,1},{0,1,1},{0,0,2},{3,0,0}};
+    if (n%2==0){
+        cout<<n/2+n/2+n/6+((n/2)%3!=0);
+    }else{
+        cout<<n/2+n/2+1+(n/2+1)/3+((n/2+1)%3!=0);
     }
 }
 
 int main() {
     fast;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) solve();
 }

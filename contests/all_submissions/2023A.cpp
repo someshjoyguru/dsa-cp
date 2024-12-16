@@ -11,8 +11,8 @@ using namespace std;
 #define vin(v,n) vll (v)(n); f(i,0,n)cin>>(v)[i];
 #define all(v) (v).begin(),(v).end()
 #define rall(v) (v).rbegin(),(v).rend()
-#define sort(v) sort(all(v));
-#define rsort(v) sort(v) reverse(all(v));
+// #define sort(v) sort(all(v));
+// #define rsort(v) sort(v) reverse(all(v));
 #define pYES cout<<"YES\n";
 #define pNO cout<<"NO\n";
 const ll mod = 1000000007;
@@ -35,48 +35,21 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+// sum_i<sum_j
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
+    in(n)
     vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
+    f(i,0,n){
+        in(x) in(y)
+        v.push_back({x,y});
     }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
+    sort(all(v), [&](vll &x, vll &y){
+        return x[0]+x[1]<y[0]+y[1];
+    });
+    f(i,0,n){
+        cout<<v[i][0]<<" "<<v[i][1]<<" ";
     }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    cout<<endl;
 }
 
 int main() {

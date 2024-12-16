@@ -17,11 +17,11 @@ using namespace std;
 #define pNO cout<<"NO\n";
 const ll mod = 1000000007;
 
-#ifndef ONLINE_JUDGE
-#define debug(x) cerr << #x << " = "; _print(x); cerr << endl;
-#else
-#define debug(x)
-#endif
+// #ifndef ONLINE_JUDGE
+// #define debug(x) cerr << #x << " = "; _print(x); cerr << endl;
+// #else
+// #define debug(x)
+// #endif
 
 template <typename T>
 void _print(T x) { cerr << x; }
@@ -35,48 +35,41 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
+    in(n) in(m) in(l);
+    vvll hur(n, vll(2));
+    f(i, 0, n) cin >> hur[i][0] >> hur[i][1];
+
+    vector<pair<ll, ll>> vv;
+    f(i, 0, m) {
+        in(x) in(y)
+        vv.push_back({x, y});
+    }
+    sort(vv);
+    priority_queue<ll> pq;
+    ll sum = 0, cnt = 0, id = 0;
+
+    for (auto& hh : hur) {
+        ll st = hh[0], en = hh[1];
+
+        while (id < m && vv[id].first < st) {
+            pq.push(vv[id].second);
+            id++;
         }
-        return;
+
+        while (!pq.empty() && sum < en - st + 1) {
+            sum += pq.top();
+            cnt++;
+            pq.pop();
+        }
+
+        if (sum < en - st + 1) {
+            cout << -1 << endl;
+            return;
+        }
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    cout << cnt << endl;
 }
 
 int main() {

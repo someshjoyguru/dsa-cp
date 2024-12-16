@@ -35,48 +35,47 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
+bool fff(ll x, vll& a, ll k) {
+    ll n = a.size();
+    vll loww(n), upp(n);
+    loww[0] = a[0] - x;
+    upp[0] = a[0] + x;
+
+    f(i,1,n) {
+        ll nl = max(loww[i - 1], a[i] - x);
+        ll nh = min(upp[i - 1], a[i] + x);
+
+        if (nl > nh) {
+            if (k > 0) {
+                k--;
+                loww[i] = a[i] - x;
+                upp[i] = a[i] + x;
+            } else {
+                return false;
+            }
+        } else {
+            loww[i] = nl;
+            upp[i] = nh;
         }
-        return;
     }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
+    return true;
+}
+
+void solve() {
+    in(n) in(k)
+    vin(a,n)
+
+    ll l = 0, r = 1e9, ans = 1e9;
+    while (l <= r) {
+        ll md = (l + r) / 2;
+        if (fff(md, a, k)) {
+            ans = md;
+            r = md - 1;
+        } else {
+            l = md + 1;
+        }
     }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+    cout << ans << "\n";
 }
 
 int main() {
@@ -85,3 +84,5 @@ int main() {
     cin >> t;
     while(t--) solve();
 }
+
+
