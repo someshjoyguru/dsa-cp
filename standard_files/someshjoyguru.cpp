@@ -1,87 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define fast ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);cerr.rdbuf(cout.rdbuf());
-#define f(i,a,b) for (ll (i)=(a); (i)<(b); (i)++)
-#define rf(i,a,b) for (ll (i)=(a); (i)>=(b); (i)--)
-#define vll vector<ll>
-#define vvll vector<vll>
-#define in(n) ll n; cin>>n;
-#define sin(s) string (s); cin>>(s);
-#define vin(v,n) vll (v)(n); f(i,0,n)cin>>(v)[i];
-#define all(v) (v).begin(),(v).end()
-#define rall(v) (v).rbegin(),(v).rend()
-#define sort(v) sort(all(v));
-#define rsort(v) sort(v) reverse(all(v));
-#define pYES cout<<"YES\n";
-#define pNO cout<<"NO\n";
-const ll mod = 1000000007;
 
-#ifndef ONLINE_JUDGE
-#define debug(x) cerr << #x << " = "; _print(x); cerr << endl;
-#else
-#define debug(x)
-#endif
-
-template <typename T>
-void _print(T x) { cerr << x; }
-template <typename T, typename V>
-void _print(pair<T, V> p) { cerr << "{"; _print(p.first); cerr << ", "; _print(p.second); cerr << "}"; }
-template <typename T>
-void _print(vector<T> v) { cerr << "[ "; for (T i : v) { _print(i); cerr << " "; } cerr << "]"; }
-template <typename T>
-void _print(set<T> s) { cerr << "{ "; for (T i : s) { _print(i); cerr << " "; } cerr << "}"; }
-template <typename T, typename V>
-void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
-/* *********************Template ends here************** */
-
-void solve() {
-    in(n) in(d) in(l)
-    if (d==1){
-        if (l==2 && n==2){
-            cout<<1<<" "<<2<<endl;
-            
-        }else{
-          cout<<-1<<endl;
-        }
-        return;
-    }
-    if (l==n || d>n-1 ){
-        cout<<-1<<endl;
-        return;
-    }
-    if (l-2>(n-(d+1))){
-        cout<<-1<<endl;
-        return;
-    }
-    vvll v;
-    vll vv;
-    ll x=0;
-    f(i,2,2+l){
-        // cout<<1<<" "<<i<<endl;
-        v.push_back({1,i});
-        vv.push_back(i);
-        x=i;
-    }
-    f(i,0,d-2){
-        // cout<<x<<" "<<x+1<<endl;
-        v.push_back({x,x+1});
-        x++;
-    }
-    // if (v.size()!=n-1){
-    //     cout<<-1<<endl;
-    //     return;
-    // }
-    ll left=n-1-v.size();
-    debug(left)
-    for (auto it: v){
-        cout<<it[0]<<" "<<it[1]<<endl;
-    }
+bool is(const string &a, const string &b) {
+    return b.find(a) != string::npos;
 }
 
 int main() {
-    fast;
-    int t = 1;
-    cin >> t;
-    while(t--) solve();
+    int n;
+    cin >> n;
+    vector<string> v(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> v[i];
+    }
+    vector<vector<string>> x;
+    x.push_back({v[0]});
+    for (int i=1; i<n; i++){
+        sort(x.begin(), x.end(), [](vector<string> &a, vector<string> &b) {
+            return a.size() > b.size();
+        });
+        bool dd=false;
+        for (int j=0; j<x.size(); j++){
+            bool fl=true;
+            for (auto xx: x[j]){
+                if (is(v[i], xx) || is(xx, v[i])){
+                    fl=false;
+                    break;
+                }
+            }
+            if (fl) {
+                x[j].push_back(v[i]);
+                dd=true;
+                break;
+            }
+        }
+        if (!dd){
+            x.push_back({v[i]});
+        }
+    }
+    int cnt = 0;
+    for (int i = 0; i < x.size(); i++) {
+        cnt=max(cnt, (int)x[i].size());
+    }
+
+    cout << cnt << endl;
+    return 0;
 }
