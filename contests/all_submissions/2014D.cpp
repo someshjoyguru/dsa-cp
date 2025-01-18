@@ -30,134 +30,41 @@ void _print(pair<T, V> p) { cerr << "{"; _print(p.first); cerr << ", "; _print(p
 template <typename T>
 void _print(vector<T> v) { cerr << "[ "; for (T i : v) { _print(i); cerr << " "; } cerr << "]"; }
 template <typename T>
-void _print(set<T> s) { cerr << "{ "; for (T i : s) { _print(i); cerr << " "; } cerr << "}"; }
+void _print(multiset<T> s) { cerr << "{ "; for (T i : s) { _print(i); cerr << " "; } cerr << "}"; }
 template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-class SegmentTree {
-private:
-    vector<ll> arr;       // Original array
-    vector<ll> tree;      // Segment tree to store indices
-    ll n;
-
-    // Function to build the segment tree
-    void buildTree(ll node, ll start, ll end) {
-        if (start == end) {
-            // Leaf node, store the index
-            tree[node] = start;
-        } else {
-            ll mid = (start + end) / 2;
-            ll leftChild = 2 * node + 1;
-            ll rightChild = 2 * node + 2;
-
-            buildTree(leftChild, start, mid);
-            buildTree(rightChild, mid + 1, end);
-
-            // Store the index of the minimum value
-            ll leftIdx = tree[leftChild];
-            ll rightIdx = tree[rightChild];
-            tree[node] = (arr[leftIdx] <= arr[rightIdx]) ? leftIdx : rightIdx;
-        }
-    }
-
-    // Function to handle range queries
-    ll queryTree(ll node, ll start, ll end, ll l, ll r) {
-        if (r < start || end < l) {
-            // Out of range
-            return -1;
-        }
-        if (l <= start && end <= r) {
-            // Fully in range
-            return tree[node];
-        }
-
-        ll mid = (start + end) / 2;
-        ll leftChild = 2 * node + 1;
-        ll rightChild = 2 * node + 2;
-
-        ll leftIdx = queryTree(leftChild, start, mid, l, r);
-        ll rightIdx = queryTree(rightChild, mid + 1, end, l, r);
-
-        if (leftIdx == -1) return rightIdx;
-        if (rightIdx == -1) return leftIdx;
-
-        return (arr[leftIdx] <= arr[rightIdx]) ? leftIdx : rightIdx;
-    }
-
-    // Function to update the segment tree
-    void updateTree(ll node, ll start, ll end, ll idx, ll value) {
-        if (start == end) {
-            // Update leaf node
-            arr[start] = value;
-            tree[node] = start;
-        } else {
-            ll mid = (start + end) / 2;
-            ll leftChild = 2 * node + 1;
-            ll rightChild = 2 * node + 2;
-
-            if (idx <= mid) {
-                updateTree(leftChild, start, mid, idx, value);
-            } else {
-                updateTree(rightChild, mid + 1, end, idx, value);
-            }
-
-            // Update the current node
-            ll leftIdx = tree[leftChild];
-            ll rightIdx = tree[rightChild];
-            tree[node] = (arr[leftIdx] <= arr[rightIdx]) ? leftIdx : rightIdx;
-        }
-    }
-
-public:
-    SegmentTree(const vector<ll>& input) {
-        arr = input;
-        n = arr.size();
-        tree.resize(4 * n);
-        buildTree(0, 0, n - 1);
-    }
-
-    ll query(ll l, ll r) {
-        return queryTree(0, 0, n - 1, l, r);
-    }
-
-    void update(ll idx, ll value) {
-        updateTree(0, 0, n - 1, idx, value);
-    }
-};
 
 void solve() {
     in(n) in(d) in(k)
-    vll v(n+2,0);
-    while(k--){
+    map<ll,vll> mps, mpe;
+    f(i,0,k){
         in(l) in(r)
         l--; r--;
-        v[l]++;
-        v[r+1]--;
+        mps[l].push_back(i);
+        mpe[r].push_back(i);
     }
-    f(i,1,n+1)v[i]+=v[i-1];
-    SegmentTree sg(v);
-    ll mini=LLONG_MAX;
-    ll maxi=0;
-    ll minId=0, maxId=0;
-    f(i,0,n-d+1){
-        ll tmp = sg.query(i,i+d-1);
-        if (v[tmp]<mini){
-            mini=min(mini,v[tmp]);
-            minId=i+1;
+    set<ll> st;
+    f(i,0,d){
+        if (mps.count(i)>0){
+            st.insert(all(mps[i]));
         }
-        if (v[tmp]>maxi){
-            maxi=max(maxi,v[tmp]);
-            maxId=i+1;
-        }
-        debug(tmp);
-        debug(maxi);
-        debug(mini);
-        debug(minId);
-        debug(maxId);
-
     }
-    cout<<maxId<<" "<<minId<<endl;
+    vll v;
+    v.push_back(st.size());
+    f(i,d,n){
+        if (mpe.count(i-d)>0){
+            for (ll x: mpe[i-d]) st.erase(x);
+        }
+        if (mps.count(i)>0){
+            st.insert(all(mps[i]));
+        }
+        v.push_back(st.size());
+    }
+    ll ans1=(max_element(all(v))-v.begin())+1;
+    ll ans2=(min_element(all(v))-v.begin())+1;
+    cout<<ans1<<" "<<ans2<<endl;
 }
 
 int main() {

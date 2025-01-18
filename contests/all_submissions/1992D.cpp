@@ -36,9 +36,38 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 /* *********************Template ends here************** */
 
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n) in(m) in(k)
+    sin(s)
+    vll dp(n+2,0);
+    ll i=0;
+    set<ll> st;
+    s='L'+s+'L';
+    n+=2; 
+    // f(i,0,n)if (s[i]=='L')st.insert(i);
+    while(i<n){
+        while(i<n && s[i]=='L')i++;
+        ll w=0;
+        while(i<n && s[i]=='W')w++, i++;
+        if (w!=0){
+            if (w+1<=m) {}
+            else if (w-m+1>k){
+                pNO
+                return;
+            }else{
+                k-=(w-m+1);
+            }
+        }
+        ll c=0;
+        while(i<n && s[i]=='C'){
+            i++;
+            c++;
+            if (c+1>m){
+                pNO
+                return;
+            }
+        }
+    }
+    pYES
 }
 
 int main() {

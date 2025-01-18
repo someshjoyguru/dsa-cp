@@ -35,10 +35,44 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n)
+    vin(v,n)
+    bool is1=false, is1e6=false;
+    f(i,0,n){
+        if (v[i]==1) is1=true;
+        if (v[i]==1000000) is1e6=true;
+    }
+    ll x=v[0];
+    if (!is1)v.push_back(1);
+    if (!is1e6)v.push_back(1e6);
+    sort(v)
+    ll ans=1;
+    auto ub=upper_bound(all(v),x);
+    ub--;
+    debug(*ub);
+    ll i=ub-v.begin();
+    debug(i);
+    debug(v);
+    if (i>0){
+        if (v[i-1]==1){
+            if (is1) ans+=(v[i]-v[i-1])/2;
+            else ans+=(v[i]-1);
+        }else ans+=(v[i]-v[i-1])/2;
+    }
+    debug(ans);
+    n=v.size();
+    if (i<n-1){
+        if (v[i+1]==1000000){
+            if (is1e6) ans+=(v[i+1]-v[i])/2;
+            else ans+=(v[i+1]-v[i]);
+            debug(ans);
+        }else ans+=(v[i+1]-v[i])/2;
+    }
+    debug(ans);
+    cout<<ans<<endl;
+    return;
 }
 
 int main() {

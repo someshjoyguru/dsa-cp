@@ -38,23 +38,22 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 
 void solve() {
     sin(s)
-    ll n=s.size();
-    ll i=n-1;
-    while(i>0){
-        ll j=i;
-        if (s[j]!='0'){
-            while (j > 0 && ((ll)(s[j-1] - '0') < ((ll)(s[j] - '0') - 1))) {
-                s[j]--;
-                swap(s[j], s[j-1]);
-                j--;
-                debug(s);
+    ll n=s.length();
+    f(i,0,n){
+        // now check from i+1 to i+10
+        ll bst=s[i]-'0';
+        ll bstidx=i;
+        f(j,i+1,min(i+10,n)){
+            if (s[j]-'0'-(j-i)>bst){
+                bst=s[j]-'0'-(j-i);
+                bstidx=j;
             }
         }
-        debug(i);
-        debug(j);
-        while (i>0 && s[i]<=s[i-1]) i--;
-        debug(i);
-        if (i==0) break;
+        while(bstidx>i){
+            s[bstidx]--;
+            swap(s[bstidx],s[bstidx-1]);
+            bstidx--;
+        }
     }
     cout<<s<<endl;
 }

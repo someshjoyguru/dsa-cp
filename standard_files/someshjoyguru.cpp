@@ -1,48 +1,29 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+
 using namespace std;
 
-bool is(const string &a, const string &b) {
-    return b.find(a) != string::npos;
+int minimumFlips(string target) {
+    int flips = 0;
+    char current = '0'; 
+
+    for (char c : target) {
+        if (c != current) {
+            flips++;
+            current = (current == '0') ? '1' : '0';
+        }
+    }
+
+    return flips;
 }
 
 int main() {
-    int n;
-    cin >> n;
-    vector<string> v(n);
+    string target="01011";
+    // cout << "Enter the target binary string: ";
+    // cin >> target;
 
-    for (int i = 0; i < n; i++) {
-        cin >> v[i];
-    }
-    vector<vector<string>> x;
-    x.push_back({v[0]});
-    for (int i=1; i<n; i++){
-        sort(x.begin(), x.end(), [](vector<string> &a, vector<string> &b) {
-            return a.size() > b.size();
-        });
-        bool dd=false;
-        for (int j=0; j<x.size(); j++){
-            bool fl=true;
-            for (auto xx: x[j]){
-                if (is(v[i], xx) || is(xx, v[i])){
-                    fl=false;
-                    break;
-                }
-            }
-            if (fl) {
-                x[j].push_back(v[i]);
-                dd=true;
-                break;
-            }
-        }
-        if (!dd){
-            x.push_back({v[i]});
-        }
-    }
-    int cnt = 0;
-    for (int i = 0; i < x.size(); i++) {
-        cnt=max(cnt, (int)x[i].size());
-    }
+    int result = minimumFlips(target);
+    cout << "Minimum number of flips required: " << result << endl;
 
-    cout << cnt << endl;
     return 0;
 }

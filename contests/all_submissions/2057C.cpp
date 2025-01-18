@@ -35,10 +35,15 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+// ref: editorial
+// idea: 1 or 2 set bits adds 2^(i+1) to ans
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(l) in(r)
+    ll k = 31 - __builtin_clz(l ^ r);
+    ll a = l | ((1 << k) - 1);
+    ll b = a + 1;
+    ll c = (a == l ? r : l);
+    cout << a << " " << b << " " << c << "\n";
 }
 
 int main() {

@@ -36,9 +36,48 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 /* *********************Template ends here************** */
 
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n) in(x) in(y)
+    x--; y--;
+    vll v(n,0);
+    bool fl=true;
+    f(i,x+1,n){
+        if(fl){
+            v[i]=-1;
+            fl=false;
+        }else{
+            v[i]=1;
+            fl=true;
+        }
+    }
+    fl=true;
+    rf(i,y-1,0){
+        if(fl){
+            v[i]=-1;
+            fl=false;
+        }else{
+            v[i]=1;
+            fl=true;
+        }
+    }
+    v[x]=1; v[x-1]=1;
+    v[y]=1; v[y+1]=1;
+    fl=true;
+    f(i,y+2,x-1){
+        if(fl){
+            v[i]=-1;
+            fl=false;
+        }else{
+            v[i]=1;
+            fl=true;
+        }
+    }
+    // auto pre=v, suf=v;
+    // f(i,1,n)pre[i]+=pre[i-1];
+    // rf(i,n-2,0)suf[i]+=suf[i+1];
+    // debug(pre); 
+    // debug(suf); 
+    f(i,0,n)cout<<v[i]<<" ";
+    cout<<endl;
 }
 
 int main() {

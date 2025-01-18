@@ -35,10 +35,32 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+void rec() {
+    sin(a) sin(b) sin(c)
+    ll n=a.size(), m=b.size();
+    auto func=[&](ll i, ll j, ll k, auto func)->ll{
+        ll x=1e9;
+        if (k==n+m) x=0;
+        if (i<n) x=min(x,(a[i]!=c[k])+func(i+1,j,k+1,func));
+        if (j<m) x=min(x,(b[j]!=c[k])+func(i,j+1,k+1,func));
+        return x;
+    };
+    cout<<func(0,0,0,func)<<endl;
+}
+
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    sin(a) sin(b) sin(c)
+    ll n=a.size(), m=b.size();
+    vvll dp(n+10, vll(m+10, -1));
+    auto func=[&](ll i, ll j, ll k, auto func)->ll{
+        if (k==n+m) return dp[i][j]=0;
+        if (dp[i][j]!=-1) return dp[i][j];
+        else dp[i][j]=1e9;
+        if (i<n) dp[i][j]=min(dp[i][j],(a[i]!=c[k])+func(i+1,j,k+1,func));
+        if (j<m) dp[i][j]=min(dp[i][j],(b[j]!=c[k])+func(i,j+1,k+1,func));
+        return dp[i][j];
+    };
+    cout<<func(0,0,0,func)<<endl;
 }
 
 int main() {

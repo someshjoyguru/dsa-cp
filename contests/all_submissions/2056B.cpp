@@ -35,10 +35,48 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n)
+    vvll gp(n);
+    vector<string> ggp;
+    f(i,0,n){
+        sin(s)
+        ggp.push_back(s);
+        f(j,0,n){
+            if (s[j]=='1'){
+                gp[j].push_back(i);
+                gp[i].push_back(j);
+            }
+        }
+    }
+    vll ans(n,0);
+    f(i,0,n)ans[i]=i;
+    f(i,0,n-1){
+        ll miniid=i;
+        f(j,i+1,n){
+            bool fl;
+            if (ans[miniid]<ans[j]){
+                fl=(ggp[ans[miniid]][ans[j]]=='0');
+            }else fl=(ggp[ans[j]][ans[miniid]]=='1');
+            if (fl) miniid=j;
+        }
+        if (miniid!=i) swap(ans[i],ans[miniid]);
+    }
+    // vvll v;
+    // f(i,0,n){
+    //     v.push_back({(ll)(gp[i].size()),i});
+    // }
+    // rsort(v)
+    // ll cnt=n;
+    // f(i,0,n){
+    //     ans[v[i][1]]=cnt;
+    //     cnt--;
+    // }
+    f(i,0,n){
+        cout<<ans[i]+1<<" ";
+    }
+    cout<<endl;
 }
 
 int main() {

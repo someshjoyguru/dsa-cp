@@ -38,10 +38,28 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 
 void solve() {
     in(n) in(q)
-    vin(x,n)
-    vin(k,q)
-    // find no. of points with exactly kith segments
-    
+    vin(v,n)
+    vin(vq,q)
+    map<ll,ll> mp;
+    auto cal = [&](ll id){
+        if (id==0 || id==n-1) return n-1;
+        return id*(n-id)+(n-id-1);
+    };
+    f(i,0,n){
+        mp[cal(i)]++;
+        debug(mp);
+        if (i==0 || v[i]-v[i-1]==1)continue;
+        else {
+            ll l=v[i]-v[i-1]-1;
+            mp[cal(i-1)-i+1]+=l;
+            debug(mp);
+        }
+    }
+    f(i,0,q){
+        cout<<mp[vq[i]]<<" ";
+    }
+    cout<<endl;
+
 }
 
 int main() {

@@ -35,10 +35,59 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    sin(s)
+    ll n=s.length();
+    ll sum=0;
+    ll cnt=0;
+    ll cnt3=0;
+    f(i,0,n){
+        sum=(sum+(s[i]-'0'))%9;
+        if (s[i]=='2') cnt++;
+        if (s[i]=='3') cnt3++;
+    }
+    debug(cnt);
+    if (sum%9==0){
+        pYES
+        return;
+    }
+    if (cnt3==n){
+        pYES
+        return;
+    }
+    if (cnt3>=2){
+        ll sum1=sum+12;
+        ll i=0;
+        while(i<=cnt*2){
+            if ((sum1+i)%9==0){
+                pYES
+                return;
+            }
+            i+=2;
+        }
+    }
+    if (cnt3>=1){
+        ll sum1=sum+6;
+        debug(sum1);
+        ll i=0;
+        while(i<=cnt*2){
+            if ((sum1+i)%9==0){
+                pYES
+                return;
+            }
+            i+=2;
+        }
+    }
+    ll i=0;
+    while(i<=cnt*2){
+        if ((sum+i)%9==0){
+            pYES
+            return;
+        }
+        i+=2;
+    }
+    pNO
 }
 
 int main() {

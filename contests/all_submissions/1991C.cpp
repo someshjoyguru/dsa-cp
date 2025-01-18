@@ -36,9 +36,79 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 /* *********************Template ends here************** */
 
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n)
+    vin(v, n);
+    set<ll> st(all(v));
+
+    if (st.size() == 1 && *st.begin() == 0) {
+        cout << 0 << endl<<endl;
+        return;
+    }
+
+    bool fl = true;
+    ll p = *st.begin() % 2;
+    for (ll x : st) {
+        if (x % 2 != p) {
+            fl = false;
+            break;
+        }
+    }
+
+    if (!fl) {
+        cout << -1 << endl;
+        return;
+    }
+
+    vll ans;
+    ll op = 0;
+
+    while (op < 40) {
+        if (st.size() == 1 && *st.begin() == 0) {
+            break;
+        }
+
+        auto it = st.rbegin();
+        ll max1 = *it;
+        st.erase(max1);
+
+        if (st.empty()) {
+            ans.push_back(max1);
+            st.insert(0);
+            break;
+        }
+
+        it = st.rbegin();
+        ll max2 = *it;
+        st.erase(max2);
+
+        if ((max1 + max2) % 2 != 0) {
+            cout << -1 << endl;
+            return;
+        }
+
+        ll x = (max1 + max2) / 2;
+        ans.push_back(x);
+
+        set<ll> tmp;
+        for (ll num : st) {
+            tmp.insert(abs(num - x));
+        }
+        tmp.insert(abs(max1 - x));
+        tmp.insert(abs(max2 - x));
+
+        st = tmp;
+        op++;
+    }
+
+    if (op == 40 && !(st.size() == 1 && *st.begin() == 0)) {
+        cout << -1 << endl;
+    } else {
+        cout << ans.size() << endl;
+        for (ll x : ans) {
+            cout << x << " ";
+        }
+        cout << endl;
+    }
 }
 
 int main() {

@@ -35,10 +35,25 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+/*
+ax+by=gcd(a,b)
+Bezout's identity
+ref: editorial
+*/
+
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n) in(a) in(b)
+    vin(v,n)
+    ll d=__gcd(a,b);
+    for (ll &x:v)x=x%d;
+    sort(v)
+    debug(v)
+    ll res=v[n-1]-v[0];
+    debug(d)
+    f(i,1,n){
+        res=min(res,v[i-1]+d-v[i]);
+    }
+    cout<<res<<endl;
 }
 
 int main() {

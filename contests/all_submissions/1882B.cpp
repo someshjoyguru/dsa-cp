@@ -35,10 +35,43 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n)
+    vvll v;
+    f(i,0,n){
+        in(x)
+        vin(vv,x)
+        v.push_back(vv);
+    }
+    map<ll,ll> freq;
+    set<ll> pres;
+    f(i,0,n){
+        f(j,0,v[i].size()){
+            freq[v[i][j]]++;
+            pres.insert(v[i][j]);
+        }
+    }
+    ll maxi=0;
+    for (ll el: pres){
+        auto tmp=freq;
+        set<ll> rem;
+        f(i,0,n){
+            auto it=lower_bound(all(v[i]),el);
+            if (it!=v[i].end() && *it==el){
+                f(j,0,v[i].size()){
+                    tmp[v[i][j]]--;
+                }
+                for (ll ele: pres){
+                    if (tmp[ele]==0) {
+                        rem.insert(ele);
+                    }
+                }
+            }
+        }
+        maxi=max(maxi,(ll)(pres.size()-rem.size()));
+    }
+    cout<<maxi<<endl;
 }
 
 int main() {

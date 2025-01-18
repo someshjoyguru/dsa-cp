@@ -35,10 +35,41 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+ll mex(set<ll>& st){
+    ll c=0;
+    for(ll x: st){
+        if (x!=c) return c;
+        else c++;
+    }
+    return c;
+}
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n) in(x) in(y)
+    x--; y--;
+    vll v(n,0);
+    // set<ll> st={0,1,2};
+    // cout<<mex(st)<<endl;
+    ll k=5;
+    while(k--){
+        ll cnt=0;
+        f(i,0,n){
+            set<ll> st;
+            st.insert(v[(i-1+n)%n]);
+            st.insert(v[(i+1+n)%n]);
+            if (i==x)st.insert(v[y]);
+            if (i==y)st.insert(v[x]);
+            debug(st);
+            ll m=mex(st);
+            debug(m);
+            if (m!=v[i]) cnt++;
+            v[i]=m;
+        }
+        debug(v)
+        debug(cnt)
+        if (cnt==0) break;
+    }
+    f(i,0,n)cout<<v[i]<<" ";
+    cout<<endl;
 }
 
 int main() {

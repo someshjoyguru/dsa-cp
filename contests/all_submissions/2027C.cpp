@@ -36,9 +36,29 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 /* *********************Template ends here************** */
 
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n)
+    vin(v,n)
+    map<ll,vll> mp;
+    f(i,0,n){
+        mp[v[i]+i].push_back(i);
+    }
+    ll maxi=n;
+    map<ll,ll> dp;
+    auto func=[&](ll n, auto func)->void{
+        if (dp.count(n)){
+            maxi=max(maxi,dp[n]);
+            return;
+        }
+        ll tmp=n;
+        for (ll x:mp[n]){
+            tmp=max(tmp,n+x);
+            if (x!=0)func(n+x,func);
+        }
+        dp[n]=tmp;
+        maxi=max(maxi,tmp);
+    };
+    func(n,func);
+    cout<<maxi<<endl;
 }
 
 int main() {

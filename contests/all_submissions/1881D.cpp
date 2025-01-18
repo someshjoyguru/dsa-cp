@@ -35,15 +35,62 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+const ll MAX_VAL = 1e6 + 5;
+
+// prime template
+vll pr;
+
+void precomputeSieve() {
+    pr.resize(MAX_VAL);
+    iota(pr.begin(), pr.end(), 0);
+    for (ll i = 2; i * i < MAX_VAL; i++) {
+        if (pr[i] == i) {
+            for (ll j = i * i; j < MAX_VAL; j += i) {
+                if (pr[j] == j) {
+                    pr[j] = i;
+                }
+            }
+        }
+    }
+}
+
+map<ll,ll> func(ll x) {
+    map<ll,ll> factors;
+    while (x > 1) {
+        ll prime = pr[x];
+        factors[prime]++;
+        x /= prime;
+    }
+    return factors;
+}
+
+
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n)
+    vin(v,n)
+    // n root n ---10^4*root(10^6)
+    map<ll,ll> dp;
+    f(i,0,n){
+        ll x=v[i];
+        auto ff=func(x);
+        // debug(ff);
+        for (auto &[x,y]: ff) dp[x]+=y;
+    }
+    // debug(dp);
+    for(auto &[i,ff]:dp){
+        if (ff%n){
+            pNO
+            return;
+        }
+    }
+    pYES
 }
 
 int main() {
     fast;
     int t = 1;
+    precomputeSieve();
     cin >> t;
     while(t--) solve();
 }
+

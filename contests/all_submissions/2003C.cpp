@@ -39,35 +39,31 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 void solve() {
     in(n)
     sin(s)
-    vll v(26,0);
-    f(i,0,n)v[s[i]-'a']++;
-    string ss;
-    f(i,0,n){
-        if (v[i]){
-            ss+=(i+'a');
-            v[i]--;
-            if (ss.size()==4) break;
-        }
+    // now ik
+    // new method to separate repeated characters - odd even (by sorting based on frequency)
+    map<char,ll> mp;
+    string ss=string(n,'*');
+    f(i,0,n)mp[s[i]]++;
+    vvll v;
+    for (auto &[c,fr]: mp){
+        v.push_back({fr, c-'a'});
     }
-    if (ss.size()<4){
-        f(i,0,n){
-            if (v[i]){
-                f(j,0,v[i]){
-                    ss+=(i+'a');
-                }
-            }
-        }
-        cout<<ss<<endl;
-        return;
-    }else{
-        priority_queue<pair<ll,ll>> pq;
-        f(i,0,26) pq.push({i,v[i]});
-        set<ll> st;
-        f(i,0,4)ss.p
-        f(i,0,n-4){
-
-        }
+    rsort(v)
+    string st;
+    f(i,0,v.size())f(j,0,v[i][0])st+=('a'+v[i][1]);
+    ll i=0, j=0;
+    while(i<n && j<n){
+        ss[j]=st[i];
+        i++;
+        j+=2;
     }
+    j=1;
+    while(i<n && j<n){
+        ss[j]=st[i];
+        i++;
+        j+=2;
+    }
+    cout<<ss<<endl;
 }
 
 int main() {

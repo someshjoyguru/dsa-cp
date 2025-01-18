@@ -35,10 +35,23 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
+
 void solve() {
-    in(k)
-    // GPT HELP: https://chatgpt.com/share/6774d838-4f8c-800a-9666-c9707586029c
-    cout<<k+int(sqrtl(k)+0.5)<<endl;
+    in(n) in(k) in(l)
+    vin(v,n)
+    sort(v)
+    ll t=0;
+    t+=v[0]*2;
+    v[0]=0;
+    vll d;
+    f(i,1,n){
+        if (v[i]-v[i-1]>=k){
+            ll up=t/2;
+            
+        }
+        d.push_back(v[i]-v[i-1]);
+    }
+
 }
 
 int main() {

@@ -39,52 +39,16 @@ void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << "
 void solve() {
     in(n)
     sin(s)
-        s = " " + s;
-        vll pp(n+5, n);
-        vll ss(n+5,0);
-        for(int j=n; j>=1; j--){
-            if(s[j]=='p') pp[j]=j;
-            else pp[j]=pp[j+1];
-        }
-        for(int j=1; j<=n; j++){
-            if(s[j]=='s') ss[j]=j;
-            else ss[j]=ss[j-1];
-        }
-        debug(pp);
-        debug(ss);
-        vll v(n);
-        for(int j=1; j<=n; j++){
-            int u_p = INT32_MAX;
-            if(pp[j]<=n){
-                u_p = pp[j];
-            }
-            int u_s = INT32_MAX;
-            if(ss[j]>=1){
-                u_s = n - ss[j] +1;
-            }
-            if(u_p != INT32_MAX && u_s != INT32_MAX){
-                v[j-1] = min(u_p, u_s);
-            }
-            else if(u_p != INT32_MAX){
-                v[j-1] = u_p;
-            }
-            else if(u_s != INT32_MAX){
-                v[j-1] = u_s;
-            }
-            else{
-                v[j-1] = n;
-            }
-        }
-        sort(v)
-        bool fl=true;
-        f(i,0,n) {
-            if(v[i]<i+1){
-                fl=false;
-                break;
-            }
-        }
-        if (fl)pYES
-        else pNO
+    if (s[0]=='s')s[0]='.';
+    if (s[n-1]=='p')s[n-1]='.';
+    bool x=false;
+    bool y=false;
+    f(i,0,n){
+        if (s[i]=='p') x=true;
+        else if (s[i]=='s')y=true;
+    }
+    if (x & y)pNO
+    else pYES
 }
 
 int main() {
@@ -93,5 +57,3 @@ int main() {
     cin >> t;
     while(t--) solve();
 }
-
-        
