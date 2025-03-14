@@ -35,71 +35,51 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-class DisjointSet {
-    vector<int> rank, parent, size;
-public:
-    DisjointSet(int n) {
-        rank.resize(n + 1, 0);
-        parent.resize(n + 1);
-        size.resize(n + 1);
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            size[i] = 1;
+// Function to generate all divisors of x
+vector<int> getDivisors(int x) {
+    vector<int> divisors;
+    for (int i = 1; i <= sqrt(x); i++) {
+        if (x % i == 0) {
+            divisors.push_back(i);
+            if (i != x / i) divisors.push_back(x / i);
         }
     }
+    return divisors;
+}
 
-    int findUPar(int node) {
-        if (node == parent[node])
-            return node;
-        return parent[node] = findUPar(parent[node]);
-    }
+// Recursive function to count arrays
+int countArrays(int x, int n, const vector<int>& divisors, vector<vector<int>>& dp) {
+    if (x == 1) return 1; // Base case: 1 product has only one representation
+    if (n == 0) return 0; // No more arrays allowed
 
-    void unionByRank(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (rank[ulp_u] < rank[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-        }
-        else if (rank[ulp_v] < rank[ulp_u]) {
-            parent[ulp_v] = ulp_u;
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            rank[ulp_u]++;
-        }
-    }
+    if (dp[x][n] != -1) return dp[x][n];
 
-    void unionBySize(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (size[ulp_u] < size[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-            size[ulp_v] += size[ulp_u];
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            size[ulp_u] += size[ulp_v];
+    int count = 0;
+    for (int divisor : divisors) {
+        if (x % divisor == 0) {
+            count += countArrays(x / divisor, n - 1, divisors, dp);
         }
     }
-};
+    dp[x][n] = count;
+    return count;
+}
 
 void solve() {
-    in(n)
-    vin(v,n)
-    vin(pp,n)
-    DisjointSet dsu(n);
-    f(i,1,n-1){
-        dsu.unionBySize(v[i-1],v[i]);
-        dsu.unionBySize(v[i],v[i+1]);
-    }
-    
+    in(k) in(n)
+    ll x=4;
+    vector<int> divisors = getDivisors(x);
+
+    // Initialize DP table
+    vector<vector<int>> dp(x + 1, vector<int>(n + 1, -1));
+
+    // Count arrays
+    int result = countArrays(x, n, divisors, dp);
+    cout << "Number of arrays: " << result << endl;
 }
 
 int main() {
     fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) solve();
 }

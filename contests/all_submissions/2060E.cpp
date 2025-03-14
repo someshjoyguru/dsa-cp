@@ -35,71 +35,62 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-class DisjointSet {
-    vector<int> rank, parent, size;
+// union-find template
+class UnionFind {
+    vector<int> id, size;
+    int cnt;
 public:
-    DisjointSet(int n) {
-        rank.resize(n + 1, 0);
-        parent.resize(n + 1);
-        size.resize(n + 1);
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
+    UnionFind(int n) : id(n), size(n, 1), cnt(n) {
+        iota(begin(id), end(id), 0);
     }
-
-    int findUPar(int node) {
-        if (node == parent[node])
-            return node;
-        return parent[node] = findUPar(parent[node]);
+    int find(int a) {
+        return id[a] == a ? a : (id[a] = find(id[a]));
     }
-
-    void unionByRank(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (rank[ulp_u] < rank[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-        }
-        else if (rank[ulp_v] < rank[ulp_u]) {
-            parent[ulp_v] = ulp_u;
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            rank[ulp_u]++;
-        }
+    void connect(int a, int b) {
+        int x = find(a), y = find(b);
+        if (x == y) return;
+        id[x] = y;
+        size[y] += size[x];
+        --cnt;
     }
-
-    void unionBySize(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (size[ulp_u] < size[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-            size[ulp_v] += size[ulp_u];
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            size[ulp_u] += size[ulp_v];
-        }
+    int getSize(int a) {
+        return size[find(a)];
     }
+    int getCount() { return cnt; }
 };
 
 void solve() {
-    in(n)
-    vin(v,n)
-    vin(pp,n)
-    DisjointSet dsu(n);
-    f(i,1,n-1){
-        dsu.unionBySize(v[i-1],v[i]);
-        dsu.unionBySize(v[i],v[i+1]);
+    in(n) in(m1) in(m2)
+    vvll fg(n), gg(n);
+    vvll e;
+    f(i,0,m1){
+        in(u) in(v)
+        u--; v--;
+        e.push_back({u,v});
+        fg[u].push_back(v);
+        fg[v].push_back(u);
     }
-    
+    UnionFind dsugg(n), dsufg(n);
+    f(i,0,m2){
+        in(u) in(v)
+        u--; v--;
+        dsugg.connect(u,v);
+        gg[u].push_back(v);
+        gg[v].push_back(u);
+    }
+    ll c=0;
+    for(auto it:e){
+        if (dsugg.find(it[0])==dsugg.find(it[1])){
+            dsufg.connect(it[0],it[1]);
+        }else c++;
+    }
+    c+=(dsufg.getCount()-dsugg.getCount());
+    cout<<c<<endl;
 }
 
 int main() {
     fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) solve();
 }

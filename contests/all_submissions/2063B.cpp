@@ -35,71 +35,37 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-class DisjointSet {
-    vector<int> rank, parent, size;
-public:
-    DisjointSet(int n) {
-        rank.resize(n + 1, 0);
-        parent.resize(n + 1);
-        size.resize(n + 1);
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
-    }
-
-    int findUPar(int node) {
-        if (node == parent[node])
-            return node;
-        return parent[node] = findUPar(parent[node]);
-    }
-
-    void unionByRank(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (rank[ulp_u] < rank[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-        }
-        else if (rank[ulp_v] < rank[ulp_u]) {
-            parent[ulp_v] = ulp_u;
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            rank[ulp_u]++;
-        }
-    }
-
-    void unionBySize(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (size[ulp_u] < size[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-            size[ulp_v] += size[ulp_u];
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            size[ulp_u] += size[ulp_v];
-        }
-    }
-};
 
 void solve() {
-    in(n)
+    in(n) in(l) in(r)
+    l--; r--;
     vin(v,n)
-    vin(pp,n)
-    DisjointSet dsu(n);
-    f(i,1,n-1){
-        dsu.unionBySize(v[i-1],v[i]);
-        dsu.unionBySize(v[i],v[i+1]);
+    // this was for inf times
+    // sort(v)
+    // cout<<accumulate(v.begin(),v.begin()+(r-l+1),0ll)<<endl;
+    vll v1,v2,v3;
+    priority_queue<ll,vll,greater<ll>> p1,p2;
+
+    f(i,0,l) p1.push(v[i]);
+    f(i,l,r+1) {
+        p1.push(v[i]);
+        p2.push(v[i]);
     }
-    
+    f(i,r+1,n) p2.push(v[i]);
+    ll s1=0, s2=0;
+
+    f(i,0,r-l+1){
+        s1+=p1.top();
+        s2+=p2.top();
+        p1.pop();
+        p2.pop();
+    }
+    cout<<min(s1,s2)<<endl;
 }
 
 int main() {
     fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) solve();
 }

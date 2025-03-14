@@ -35,7 +35,6 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-
 void solve() {
     in(n) in(m)
     vector<string> v;
@@ -43,12 +42,61 @@ void solve() {
         sin(s)
         v.push_back(s);
     }
-    vvll g(n+1,vll());
+    vvll es(n,vll(m,0));
     f(i,0,n){
         f(j,0,m){
-            if (v[i][j]=='U')
+            if (j==0 && v[i][j]=='L'){
+                es[i][j]=1;
+            }else if (j==m-1 && v[i][j]=='R'){
+                es[i][j]=1;
+            }else if (i==0 && v[i][j]=='U'){
+                es[i][j]=1;
+            }else if (i==n-1 && v[i][j]=='D'){
+                es[i][j]=1;
+            }
         }
     }
+    queue<vll> q;
+    f(i,0,n){
+        f(j,0,m){
+            if (es[i][j]==1){
+                q.push({i,j});
+            }
+        }
+    }
+    while(!q.empty()){
+        auto it=q.front();
+        q.pop();
+        if (it[0]>0 && v[it[0]-1][it[1]]=='D' && es[it[0]-1][it[1]]==0){
+            es[it[0]-1][it[1]]=1;
+            q.push({it[0]-1,it[1]});
+        }
+        if (it[0]<n-1 && v[it[0]+1][it[1]]=='U' && es[it[0]+1][it[1]]==0){
+            es[it[0]+1][it[1]]=1;
+            q.push({it[0]+1,it[1]});
+        }
+        if (it[1]>0 && v[it[0]][it[1]-1]=='R' && es[it[0]][it[1]-1]==0){
+            es[it[0]][it[1]-1]=1;
+            q.push({it[0],it[1]-1});
+        }
+        if (it[1]<m-1 && v[it[0]][it[1]+1]=='L' && es[it[0]][it[1]+1]==0){
+            es[it[0]][it[1]+1]=1;
+            q.push({it[0],it[1]+1});
+        }
+    }
+    ll cnt=0;
+    f(i,0,n)f(j,0,m){
+        bool fl=true;
+        if (v[i][j]=='?'){
+            if (i>0 && es[i-1][j]==0) fl=false;
+            else if (i<n-1 && es[i+1][j]==0) fl=false;
+            else if (j>0 && es[i][j-1]==0) fl=false;
+            else if (j<m-1 && es[i][j+1]==0) fl=false;
+            if (fl) cnt++;
+        }
+        cnt+=es[i][j];
+    }
+    cout<<m*n-cnt<<endl;
 }
 
 int main() {

@@ -35,71 +35,63 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-class DisjointSet {
-    vector<int> rank, parent, size;
-public:
-    DisjointSet(int n) {
-        rank.resize(n + 1, 0);
-        parent.resize(n + 1);
-        size.resize(n + 1);
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
-    }
+/*Ordered set template */
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
 
-    int findUPar(int node) {
-        if (node == parent[node])
-            return node;
-        return parent[node] = findUPar(parent[node]);
-    }
+using namespace __gnu_pbds;
 
-    void unionByRank(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (rank[ulp_u] < rank[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-        }
-        else if (rank[ulp_v] < rank[ulp_u]) {
-            parent[ulp_v] = ulp_u;
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            rank[ulp_u]++;
-        }
-    }
-
-    void unionBySize(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (size[ulp_u] < size[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-            size[ulp_v] += size[ulp_u];
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            size[ulp_u] += size[ulp_v];
-        }
-    }
-};
+template <typename T>
+using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>; // find_by_order, order_of_key
+// ends here
 
 void solve() {
     in(n)
     vin(v,n)
-    vin(pp,n)
-    DisjointSet dsu(n);
-    f(i,1,n-1){
-        dsu.unionBySize(v[i-1],v[i]);
-        dsu.unionBySize(v[i],v[i+1]);
+    ordered_set<ll> st;
+    ll ll2=-1, ll2v=-1;
+    rf(i,n-1,0){
+        ll x=st.order_of_key(v[i]);
+        st.insert(v[i]);
+        if (ll2v<=x){
+            ll2=i;
+            ll2v=x;
+        }
+        debug(x);
+    }
+    st.clear();
+    ll val=v[ll2];
+    
+    vll vv;
+    f(i,0,ll2)vv.push_back(v[i]);
+    f(i,ll2+1,n)vv.push_back(v[i]);
+
+    vll leftg4(n,0);
+    vll rightl4(n,0);
+    
+    f(i,1,n){
+        if (vv[i-1]>val) leftg4[i-1]++;
+    }
+    rf(i,n-2,0){
+        if (vv[i+1]>)
+    }
+    ll ll1=-1, ll1v=-1;
+    rf(i,n-1,0){
+        ll x=i-st.order_of_key(v[i]);
+        st.insert(v[i]);
+        if (ll1v<=x){
+            ll1=i;
+            ll1v=x;
+        }
+        debug(x);
     }
     
+    cout<<ll2+1<<" "<<ll1+1<<endl;
 }
 
 int main() {
     fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) solve();
 }

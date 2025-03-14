@@ -1,67 +1,78 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define fast ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);cerr.rdbuf(cout.rdbuf());
+#define f(i,a,b) for (ll (i)=(a); (i)<(b); (i)++)
+#define rf(i,a,b) for (ll (i)=(a); (i)>=(b); (i)--)
+#define vll vector<ll>
+#define vvll vector<vll>
+#define in(n) ll n; cin>>n;
+#define sin(s) string (s); cin>>(s);
+#define vin(v,n) vll (v)(n); f(i,0,n)cin>>(v)[i];
+#define all(v) (v).begin(),(v).end()
+#define rall(v) (v).rbegin(),(v).rend()
+#define sort(v) sort(all(v));
+#define rsort(v) sort(v) reverse(all(v));
+#define pYES cout<<"YES\n";
+#define pNO cout<<"NO\n";
+const ll mod = 1000000007;
 
-typedef long long ll;
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x << " = "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
 
-ll solve_test_case() {
-    int n, k;
-    cin >> n >> k;
-    
-    vector<pair<ll, ll>> customers(n);
-    for (int i = 0; i < n; i++) cin >> customers[i].first;  // a values
-    for (int i = 0; i < n; i++) cin >> customers[i].second; // b values
-    
-    // Sort by 'a' values to process customers in order
-    sort(customers.begin(), customers.end());
-    
-    ll max_revenue = 0;
-    vector<ll> price_points;
-    
-    // Add all price points to vector
-    for (const auto& c : customers) {
-        price_points.push_back(c.first);
-        price_points.push_back(c.second);
+template <typename T>
+void _print(T x) { cerr << x; }
+template <typename T, typename V>
+void _print(pair<T, V> p) { cerr << "{"; _print(p.first); cerr << ", "; _print(p.second); cerr << "}"; }
+template <typename T>
+void _print(vector<T> v) { cerr << "[ "; for (T i : v) { _print(i); cerr << " "; } cerr << "]"; }
+template <typename T>
+void _print(set<T> s) { cerr << "{ "; for (T i : s) { _print(i); cerr << " "; } cerr << "}"; }
+template <typename T, typename V>
+void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
+/* *********************Template ends here************** */
+
+
+void solve() {
+    in(n) in(k)
+    vin(a,n)
+    vin(b,n)
+    vvll v;
+    f(i,0,n)v.push_back({a[i],b[i]});
+    sort(v)
+    multiset<ll> st;
+    ll p=v[0][0];
+    ll maxi=0;
+    f(i,0,n){
+        ll tmp=v[i][0]*(n-i);
+        auto it=lower_bound(all(st),v[i][0]);
+        ll x=min(k,distance(it,st.end()));
+        tmp+=(x*i);
+        maxi=max(maxi,tmp);
+        st.insert(v[i][1]);
     }
-    sort(price_points.begin(), price_points.end());
-    price_points.erase(unique(price_points.begin(), price_points.end()), price_points.end());
-    
-    // For each price point
-    for (ll price : price_points) {
-        ll positive = 0, negative = 0;
-        
-        // Count reviews using binary search
-        auto pos = upper_bound(customers.begin(), customers.end(), 
-                             make_pair(price, (ll)2e9));
-        positive = pos - customers.begin();
-        
-        // Count negative reviews
-        for (const auto& c : customers) {
-            if (c.first > price && c.second >= price) {
-                negative++;
-            }
-        }
-        
-        // If negative reviews within limit, update revenue
-        if (negative <= k) {
-            ll total_customers = positive + negative;
-            max_revenue = max(max_revenue, price * total_customers);
-        }
+    f(i,0,n)swap(v[i][0],v[i][1]);
+    sort(v)
+    debug(v)
+    st.clear();
+    f(i,0,n)st.insert(a[i]);
+    f(i,0,n){
+        auto it=lower_bound(all(st),v[i][0]);
+        it--;
+        ll tmp=v[i][0]*(distance(it,st.end()));
+        tmp+=min(k,(distance(it,st.begin())));
+
     }
-    
-    return max_revenue;
+
+    cout<<maxi<<endl;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    
-    int t;
+    fast;
+    int t = 1;
     cin >> t;
-    while (t--) {
-        cout << solve_test_case() << endl;
-    }
-    
-    return 0;
+    while(t--) solve();
 }

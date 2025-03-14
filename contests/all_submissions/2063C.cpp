@@ -35,71 +35,56 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-class DisjointSet {
-    vector<int> rank, parent, size;
-public:
-    DisjointSet(int n) {
-        rank.resize(n + 1, 0);
-        parent.resize(n + 1);
-        size.resize(n + 1);
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            size[i] = 1;
+//ref: editorial
+void dfs(ll node, ll par, vector<set<ll>> &g, vll&p){
+    p[node]=par;
+    for(ll nei: g[node]){
+        if(nei!=par){
+            dfs(nei,node,g,p);
         }
     }
-
-    int findUPar(int node) {
-        if (node == parent[node])
-            return node;
-        return parent[node] = findUPar(parent[node]);
-    }
-
-    void unionByRank(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (rank[ulp_u] < rank[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-        }
-        else if (rank[ulp_v] < rank[ulp_u]) {
-            parent[ulp_v] = ulp_u;
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            rank[ulp_u]++;
-        }
-    }
-
-    void unionBySize(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (size[ulp_u] < size[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-            size[ulp_v] += size[ulp_u];
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            size[ulp_u] += size[ulp_v];
-        }
-    }
-};
-
+}
 void solve() {
     in(n)
-    vin(v,n)
-    vin(pp,n)
-    DisjointSet dsu(n);
-    f(i,1,n-1){
-        dsu.unionBySize(v[i-1],v[i]);
-        dsu.unionBySize(v[i],v[i+1]);
-    }
+    vector<set<ll>> g(n);
+    vll d(n,0);
     
+    f(i,0,n-1){
+        in(u) in(v)
+        u--; v--;
+        g[u].insert(v);
+        g[v].insert(u);
+        d[u]++; d[v]++;
+    }
+
+    vll p(n,-1);
+    dfs(0,-1,g, p);
+
+    vvll v;
+    f(i,0,n)v.push_back({d[i],i});
+    rsort(v)
+    
+    ll i1=v[0][1];
+    ll i2=v[1][1];
+    
+    ll res=0;
+    f(i,1,n){
+        if (g[i1].count(v[i][1])){
+            res=max(res,d[i1]+d[v[i][1]]-2);
+        }else res=max(res,d[i1]+d[v[i][1]]-1);
+    }
+
+    f(i,2,n){
+        if (g[i2].count(v[i][1])){
+            res=max(res,d[i2]+d[v[i][1]]-2);
+        }else res=max(res,d[i2]+d[v[i][1]]-1);
+    }
+    cout<<res<<endl;
 }
 
 int main() {
     fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) solve();
 }

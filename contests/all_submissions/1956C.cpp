@@ -35,71 +35,60 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-class DisjointSet {
-    vector<int> rank, parent, size;
-public:
-    DisjointSet(int n) {
-        rank.resize(n + 1, 0);
-        parent.resize(n + 1);
-        size.resize(n + 1);
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
-    }
-
-    int findUPar(int node) {
-        if (node == parent[node])
-            return node;
-        return parent[node] = findUPar(parent[node]);
-    }
-
-    void unionByRank(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (rank[ulp_u] < rank[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-        }
-        else if (rank[ulp_v] < rank[ulp_u]) {
-            parent[ulp_v] = ulp_u;
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            rank[ulp_u]++;
-        }
-    }
-
-    void unionBySize(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (size[ulp_u] < size[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-            size[ulp_v] += size[ulp_u];
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            size[ulp_u] += size[ulp_v];
-        }
-    }
-};
 
 void solve() {
     in(n)
-    vin(v,n)
-    vin(pp,n)
-    DisjointSet dsu(n);
-    f(i,1,n-1){
-        dsu.unionBySize(v[i-1],v[i]);
-        dsu.unionBySize(v[i],v[i+1]);
+    ll x=1;
+    ll ops=n;
+    ll s=0,ss=(n*(n+1))/2;
+    while(x*n<=ss)x++;
+    // ops+=(x-1);
+    // s+=(x-1)*ss;
+    vvll v(n,vll(n,0));
+    f(i,0,n){
+        f(j,0,n){
+            v[i][j]=j+1;
+        }
     }
+    f(j,0,x){
+        f(i,0,n){
+            v[i][j]=i+1;
+        }
+    }
+    f(i,0,n-x+1){
+        f(j,0,n){
+            v[i][j]=j+1;
+        }
+    }
+    s=0;
+    f(i,0,n)f(j,0,n)s+=v[i][j];
+    // f(i,x,n+1)s+=n*i;
+    // f(i,0,n-x+1){
+    //     s+=((x-1)*(x))/2;
+    // }
+    // f(i,n-x+1,n+1)s+=(i*(x-1));
     
+    cout<<s<<" "<<2*n<<endl;
+    f(i,1,n+1){
+        cout<<1<<" "<<i<<" ";
+        f(j,1,n+1)cout<<j<<" ";
+        cout<<endl;
+    }
+    f(i,1,x){
+        cout<<2<<" "<<i<<" ";
+        f(j,1,n+1)cout<<j<<" ";
+        cout<<endl;
+    }
+    f(i,1,n-x+2){
+        cout<<1<<" "<<i<<" ";
+        f(j,1,n+1)cout<<j<<" ";
+        cout<<endl;
+    }
 }
 
 int main() {
     fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) solve();
 }

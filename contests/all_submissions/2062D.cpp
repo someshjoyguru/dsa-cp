@@ -35,71 +35,76 @@ template <typename T, typename V>
 void _print(map<T, V> m) { cerr << "{ "; for (auto i : m) { _print(i); cerr << " "; } cerr << "}"; }
 /* *********************Template ends here************** */
 
-class DisjointSet {
-    vector<int> rank, parent, size;
-public:
-    DisjointSet(int n) {
-        rank.resize(n + 1, 0);
-        parent.resize(n + 1);
-        size.resize(n + 1);
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
-    }
-
-    int findUPar(int node) {
-        if (node == parent[node])
-            return node;
-        return parent[node] = findUPar(parent[node]);
-    }
-
-    void unionByRank(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (rank[ulp_u] < rank[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-        }
-        else if (rank[ulp_v] < rank[ulp_u]) {
-            parent[ulp_v] = ulp_u;
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            rank[ulp_u]++;
-        }
-    }
-
-    void unionBySize(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (size[ulp_u] < size[ulp_v]) {
-            parent[ulp_u] = ulp_v;
-            size[ulp_v] += size[ulp_u];
-        }
-        else {
-            parent[ulp_v] = ulp_u;
-            size[ulp_u] += size[ulp_v];
-        }
-    }
-};
 
 void solve() {
     in(n)
-    vin(v,n)
-    vin(pp,n)
-    DisjointSet dsu(n);
-    f(i,1,n-1){
-        dsu.unionBySize(v[i-1],v[i]);
-        dsu.unionBySize(v[i],v[i+1]);
+    vvll v;
+    f(i,0,n){
+        in(l) in(r)
+        v.push_back({l,r});
     }
+    vvll e;
+    vvll g(n);
+    f(i,0,n-1){
+        in(u) in(v)
+        u--; v--;
+        g[u].push_back(v);
+        g[v].push_back(u);
+        e.push_back({u,v});
+    }
+    vll a;
+    f(i,0,n){
+        if (v[i][0]==v[i][1])a.push_back(v[i][0]);
+        else a.push_back(v[i][0]);
+    }
+    ll maxi=*max_element(all(a));
+    f(i,0,n){
+        if (maxi!=a[i]){
+            if (maxi<=v[i][1]) a[i]=maxi;
+            else a[i]=v[i][1];
+        }
+    }
+    debug(a)
+    // set<ll> st(all(a));
+    // ll sum=accumulate(all(st),0ll);
+    // debug(sum)
+    // cout<<sum<<endl;
+    // cout<<*max_element(all(a))<<endl;
     
+    // tree seq
+
+    ll x=-1;
+    f(i,0,n) if (g[i].size()==1){
+        x=i;
+        break;
+    }
+    vll seq={x};
+    ll par=-1;
+    while(1){
+        ll i=seq.back();
+        auto vv=g[i];
+        for (ll xx:vv) if (xx!=par)seq.push_back(xx);
+        par=i;
+        // debug(seq)
+        ll ii=seq.back();
+        // if (ii==i) break;
+        if (g[ii].size()==1 && i!=x){
+            break;
+        }
+    }
+    map<ll,ll> mp;
+    f(i,0,n)mp[seq[i]]=i;
+    vvll ob;
+    f(i,0,n){
+        ob.push_back({seq[i],a[i]});
+    }
+    debug(seq)
+    debug(ob)
 }
 
 int main() {
     fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) solve();
 }
